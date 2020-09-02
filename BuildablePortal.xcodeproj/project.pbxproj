@@ -41,6 +41,12 @@
 		2DB2EBF725005B41005B5669 /* SearchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDE25005B41005B5669 /* SearchOptions.swift */; };
 		2DB2EBF825005B41005B5669 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDF25005B41005B5669 /* AuthUser.swift */; };
 		2DB2EBF925005B41005B5669 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDF25005B41005B5669 /* AuthUser.swift */; };
+		2DB2EBFE25005B5A005B5669 /* NetworkHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFB25005B5A005B5669 /* NetworkHelpers.swift */; };
+		2DB2EBFF25005B5A005B5669 /* NetworkHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFB25005B5A005B5669 /* NetworkHelpers.swift */; };
+		2DB2EC0025005B5A005B5669 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFC25005B5A005B5669 /* UserDefault.swift */; };
+		2DB2EC0125005B5A005B5669 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFC25005B5A005B5669 /* UserDefault.swift */; };
+		2DB2EC0225005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFD25005B5A005B5669 /* DateFormatter+Extensions.swift */; };
+		2DB2EC0325005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBFD25005B5A005B5669 /* DateFormatter+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +94,9 @@
 		2DB2EBDD25005B41005B5669 /* SearchFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
 		2DB2EBDE25005B41005B5669 /* SearchOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptions.swift; sourceTree = "<group>"; };
 		2DB2EBDF25005B41005B5669 /* AuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
+		2DB2EBFB25005B5A005B5669 /* NetworkHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkHelpers.swift; sourceTree = "<group>"; };
+		2DB2EBFC25005B5A005B5669 /* UserDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
+		2DB2EBFD25005B5A005B5669 /* DateFormatter+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +146,7 @@
 		2DB2EB9325005A36005B5669 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2DB2EBFA25005B5A005B5669 /* Helpers */,
 				2DB2EBD125005B41005B5669 /* Models */,
 				2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */,
 				2DB2EB9525005A36005B5669 /* ContentView.swift */,
@@ -217,6 +227,16 @@
 				2DB2EBD925005B41005B5669 /* AccountProject.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		2DB2EBFA25005B5A005B5669 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2DB2EBFB25005B5A005B5669 /* NetworkHelpers.swift */,
+				2DB2EBFC25005B5A005B5669 /* UserDefault.swift */,
+				2DB2EBFD25005B5A005B5669 /* DateFormatter+Extensions.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,10 +404,13 @@
 				2DB2EBE025005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE225005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EBBF25005A36005B5669 /* ContentView.swift in Sources */,
+				2DB2EC0225005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */,
 				2DB2EBF025005B41005B5669 /* AuthResult.swift in Sources */,
 				2DB2EBF425005B41005B5669 /* SearchFilter.swift in Sources */,
 				2DB2EBE625005B41005B5669 /* AccountProjectItem.swift in Sources */,
 				2DB2EBEE25005B41005B5669 /* AuthUserIdentity.swift in Sources */,
+				2DB2EC0025005B5A005B5669 /* UserDefault.swift in Sources */,
+				2DB2EBFE25005B5A005B5669 /* NetworkHelpers.swift in Sources */,
 				2DB2EBF625005B41005B5669 /* SearchOptions.swift in Sources */,
 				2DB2EBF825005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
@@ -406,10 +429,13 @@
 				2DB2EBE125005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE325005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EBC025005A36005B5669 /* ContentView.swift in Sources */,
+				2DB2EC0325005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */,
 				2DB2EBF125005B41005B5669 /* AuthResult.swift in Sources */,
 				2DB2EBF525005B41005B5669 /* SearchFilter.swift in Sources */,
 				2DB2EBE725005B41005B5669 /* AccountProjectItem.swift in Sources */,
 				2DB2EBEF25005B41005B5669 /* AuthUserIdentity.swift in Sources */,
+				2DB2EC0125005B5A005B5669 /* UserDefault.swift in Sources */,
+				2DB2EBFF25005B5A005B5669 /* NetworkHelpers.swift in Sources */,
 				2DB2EBF725005B41005B5669 /* SearchOptions.swift in Sources */,
 				2DB2EBF925005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EBBE25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
