@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct BuildablePortalApp: App {
-    @StateObject var auth: AuthService = AuthService.shared
+    @StateObject var timesheet = Timesheet()
     
     var body: some Scene {
         WindowGroup {
-            TimesheetView()
+            TimesheetView(timesheet: timesheet)
         }
     }
 }

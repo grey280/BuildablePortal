@@ -41,23 +41,27 @@ struct TimesheetView: View {
     @State var isLoggingIn = false
     @State var authInfo: AuthResult = AuthResult() // this should be properly set up elsewhere, maybe with a BindableObject? dunno yet
     
+    @ObservedObject var timesheet: Timesheet
+    @ObservedObject var auth = AuthService.shared
+    
     var body: some View {
         return NavigationView {
             List {
-                ForEach(days) { (day) in
+                ForEach(timesheet.days) { (day) in
                     Section(header: Text("\(day.title): \(TimesheetEntryCell.formatter.string(from: NSNumber(value: day.total)) ?? "0") hours")) {
                         ForEach(day.entries) { (entry) in
                             NavigationLink(destination: TimesheetEntryView(timesheetEntry: entry, onSave: {
-                                self.resetAndReload()
+                                self.timesheet.clear()
                             })) {
                                 TimesheetEntryCell(entry: entry)
                             }
-                        }.onDelete { (indices) in
-                            self.delete(at: indices, in: day)
                         }
+//                        .onDelete { (indices) in
+//                            self.delete(at: indices, in: day)
+//                        }
                     }
                 }
-                if ((self.pager.totalItems ?? 0) > self.entries.count){
+                if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
                     Button(action: {
                         self.searchOptions.pageNumber = (self.searchOptions.pageNumber ?? 1) + 1
                         self.pager.pageNumber = (self.pager.pageNumber ?? 1) + 1
@@ -71,25 +75,25 @@ struct TimesheetView: View {
             .navigationBarItems(
                 leading:
                     Button(action: {
-                        self.resetAndReload()
+                        self.timesheet.clear()
                     }, label: {
                         Image(systemName: "arrow.clockwise")
                     }).padding().hoverEffect(),
                 trailing:
                     NavigationLink(destination: TimesheetEntryView(timesheetEntry: TimesheetEntry(), onSave: {
-                        self.resetAndReload()
+                        self.timesheet.clear()
                     }), label: {
                         Image(systemName: "plus")
                     }).padding().hoverEffect()
             )
         }.sheet(isPresented: self.$auth.needsLogin) {
             LoginView().onDisappear(
-                perform: self.resetAndReload
+                perform: self.timesheet.clear
             )
         }.onAppear {
-            self.resetAndReload()
+            self.timesheet.clear()
         }.onReceive(self.auth.objectWillChange) { (_) in
-            self.resetAndReload()
+            self.timesheet.clear()
         }
     }
     
