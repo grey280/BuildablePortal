@@ -14,6 +14,6 @@ struct BuildablePortalApp: App {
     var body: some Scene {
         WindowGroup {
             TimesheetView()
-        }.environmentObject(auth)
+        }
     }
 }
