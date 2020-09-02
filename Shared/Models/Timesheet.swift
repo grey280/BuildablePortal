@@ -22,6 +22,11 @@ class Timesheet : ObservableObject {
         return so
     }()
     
+    @Published private var _loading = 0
+    public var loading: Bool {
+        _loading > 0
+    }
+    
     func load(){
         guard AuthService.shared.loggedIn else {
             return
@@ -31,6 +36,8 @@ class Timesheet : ObservableObject {
             return
         }
         
+        _loading++
+        
         // want to hit "https://portal.buildableworks.com/api/User/Timeclock/getItems" with a SearchOptions and the headers set
         let getURL = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/getItems")!
         
@@ -38,6 +45,7 @@ class Timesheet : ObservableObject {
         loadRequest = CacheService.getItems(self.searchOptions, route: getURL)
             .sink(receiveCompletion: { (completion) in
                 print(completion)
+                self._loading--
                 switch(completion){
                 case .failure(let error):
                     switch (error){
@@ -88,10 +96,12 @@ class Timesheet : ObservableObject {
         }
         let items = offsets.map { self.days[dayIndex].entries[$0] }
         deleteRequest?.cancel()
+        _loading++
         let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk")!
         deleteRequest = CacheService.deleteBulk(items, route: url)
             .sink(receiveCompletion: { (completion) in
                 print(completion)
+                _loading--
             }, receiveValue: { (_) in
                 print("value")
                 self.clear()
