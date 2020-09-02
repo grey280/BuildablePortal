@@ -15,6 +15,32 @@
 		2DB2EBC025005A36005B5669 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9525005A36005B5669 /* ContentView.swift */; };
 		2DB2EBC125005A36005B5669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9625005A36005B5669 /* Assets.xcassets */; };
 		2DB2EBC225005A36005B5669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9625005A36005B5669 /* Assets.xcassets */; };
+		2DB2EBE025005B41005B5669 /* SearchFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD225005B41005B5669 /* SearchFields.swift */; };
+		2DB2EBE125005B41005B5669 /* SearchFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD225005B41005B5669 /* SearchFields.swift */; };
+		2DB2EBE225005B41005B5669 /* Pager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD325005B41005B5669 /* Pager.swift */; };
+		2DB2EBE325005B41005B5669 /* Pager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD325005B41005B5669 /* Pager.swift */; };
+		2DB2EBE425005B41005B5669 /* SystemUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD525005B41005B5669 /* SystemUser.swift */; };
+		2DB2EBE525005B41005B5669 /* SystemUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD525005B41005B5669 /* SystemUser.swift */; };
+		2DB2EBE625005B41005B5669 /* AccountProjectItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD625005B41005B5669 /* AccountProjectItem.swift */; };
+		2DB2EBE725005B41005B5669 /* AccountProjectItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD625005B41005B5669 /* AccountProjectItem.swift */; };
+		2DB2EBE825005B41005B5669 /* TimesheetActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD725005B41005B5669 /* TimesheetActivity.swift */; };
+		2DB2EBE925005B41005B5669 /* TimesheetActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD725005B41005B5669 /* TimesheetActivity.swift */; };
+		2DB2EBEA25005B41005B5669 /* TimesheetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD825005B41005B5669 /* TimesheetEntry.swift */; };
+		2DB2EBEB25005B41005B5669 /* TimesheetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD825005B41005B5669 /* TimesheetEntry.swift */; };
+		2DB2EBEC25005B41005B5669 /* AccountProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD925005B41005B5669 /* AccountProject.swift */; };
+		2DB2EBED25005B41005B5669 /* AccountProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBD925005B41005B5669 /* AccountProject.swift */; };
+		2DB2EBEE25005B41005B5669 /* AuthUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDA25005B41005B5669 /* AuthUserIdentity.swift */; };
+		2DB2EBEF25005B41005B5669 /* AuthUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDA25005B41005B5669 /* AuthUserIdentity.swift */; };
+		2DB2EBF025005B41005B5669 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDB25005B41005B5669 /* AuthResult.swift */; };
+		2DB2EBF125005B41005B5669 /* AuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDB25005B41005B5669 /* AuthResult.swift */; };
+		2DB2EBF225005B41005B5669 /* ListResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDC25005B41005B5669 /* ListResultItem.swift */; };
+		2DB2EBF325005B41005B5669 /* ListResultItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDC25005B41005B5669 /* ListResultItem.swift */; };
+		2DB2EBF425005B41005B5669 /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDD25005B41005B5669 /* SearchFilter.swift */; };
+		2DB2EBF525005B41005B5669 /* SearchFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDD25005B41005B5669 /* SearchFilter.swift */; };
+		2DB2EBF625005B41005B5669 /* SearchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDE25005B41005B5669 /* SearchOptions.swift */; };
+		2DB2EBF725005B41005B5669 /* SearchOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDE25005B41005B5669 /* SearchOptions.swift */; };
+		2DB2EBF825005B41005B5669 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDF25005B41005B5669 /* AuthUser.swift */; };
+		2DB2EBF925005B41005B5669 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBDF25005B41005B5669 /* AuthUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +75,19 @@
 		2DB2EBB625005A36005B5669 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DB2EBBA25005A36005B5669 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		2DB2EBBC25005A36005B5669 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DB2EBD225005B41005B5669 /* SearchFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFields.swift; sourceTree = "<group>"; };
+		2DB2EBD325005B41005B5669 /* Pager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pager.swift; sourceTree = "<group>"; };
+		2DB2EBD525005B41005B5669 /* SystemUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemUser.swift; sourceTree = "<group>"; };
+		2DB2EBD625005B41005B5669 /* AccountProjectItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProjectItem.swift; sourceTree = "<group>"; };
+		2DB2EBD725005B41005B5669 /* TimesheetActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimesheetActivity.swift; sourceTree = "<group>"; };
+		2DB2EBD825005B41005B5669 /* TimesheetEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimesheetEntry.swift; sourceTree = "<group>"; };
+		2DB2EBD925005B41005B5669 /* AccountProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountProject.swift; sourceTree = "<group>"; };
+		2DB2EBDA25005B41005B5669 /* AuthUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUserIdentity.swift; sourceTree = "<group>"; };
+		2DB2EBDB25005B41005B5669 /* AuthResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthResult.swift; sourceTree = "<group>"; };
+		2DB2EBDC25005B41005B5669 /* ListResultItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListResultItem.swift; sourceTree = "<group>"; };
+		2DB2EBDD25005B41005B5669 /* SearchFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilter.swift; sourceTree = "<group>"; };
+		2DB2EBDE25005B41005B5669 /* SearchOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptions.swift; sourceTree = "<group>"; };
+		2DB2EBDF25005B41005B5669 /* AuthUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +137,7 @@
 		2DB2EB9325005A36005B5669 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2DB2EBD125005B41005B5669 /* Models */,
 				2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */,
 				2DB2EB9525005A36005B5669 /* ContentView.swift */,
 				2DB2EB9625005A36005B5669 /* Assets.xcassets */,
@@ -149,6 +189,34 @@
 				2DB2EBBC25005A36005B5669 /* Info.plist */,
 			);
 			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+		2DB2EBD125005B41005B5669 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2DB2EBD225005B41005B5669 /* SearchFields.swift */,
+				2DB2EBD325005B41005B5669 /* Pager.swift */,
+				2DB2EBD425005B41005B5669 /* Entity */,
+				2DB2EBDA25005B41005B5669 /* AuthUserIdentity.swift */,
+				2DB2EBDB25005B41005B5669 /* AuthResult.swift */,
+				2DB2EBDC25005B41005B5669 /* ListResultItem.swift */,
+				2DB2EBDD25005B41005B5669 /* SearchFilter.swift */,
+				2DB2EBDE25005B41005B5669 /* SearchOptions.swift */,
+				2DB2EBDF25005B41005B5669 /* AuthUser.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2DB2EBD425005B41005B5669 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				2DB2EBD525005B41005B5669 /* SystemUser.swift */,
+				2DB2EBD625005B41005B5669 /* AccountProjectItem.swift */,
+				2DB2EBD725005B41005B5669 /* TimesheetActivity.swift */,
+				2DB2EBD825005B41005B5669 /* TimesheetEntry.swift */,
+				2DB2EBD925005B41005B5669 /* AccountProject.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,7 +376,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DB2EBE425005B41005B5669 /* SystemUser.swift in Sources */,
+				2DB2EBF225005B41005B5669 /* ListResultItem.swift in Sources */,
+				2DB2EBEA25005B41005B5669 /* TimesheetEntry.swift in Sources */,
+				2DB2EBE825005B41005B5669 /* TimesheetActivity.swift in Sources */,
+				2DB2EBEC25005B41005B5669 /* AccountProject.swift in Sources */,
+				2DB2EBE025005B41005B5669 /* SearchFields.swift in Sources */,
+				2DB2EBE225005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EBBF25005A36005B5669 /* ContentView.swift in Sources */,
+				2DB2EBF025005B41005B5669 /* AuthResult.swift in Sources */,
+				2DB2EBF425005B41005B5669 /* SearchFilter.swift in Sources */,
+				2DB2EBE625005B41005B5669 /* AccountProjectItem.swift in Sources */,
+				2DB2EBEE25005B41005B5669 /* AuthUserIdentity.swift in Sources */,
+				2DB2EBF625005B41005B5669 /* SearchOptions.swift in Sources */,
+				2DB2EBF825005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,7 +398,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DB2EBE525005B41005B5669 /* SystemUser.swift in Sources */,
+				2DB2EBF325005B41005B5669 /* ListResultItem.swift in Sources */,
+				2DB2EBEB25005B41005B5669 /* TimesheetEntry.swift in Sources */,
+				2DB2EBE925005B41005B5669 /* TimesheetActivity.swift in Sources */,
+				2DB2EBED25005B41005B5669 /* AccountProject.swift in Sources */,
+				2DB2EBE125005B41005B5669 /* SearchFields.swift in Sources */,
+				2DB2EBE325005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EBC025005A36005B5669 /* ContentView.swift in Sources */,
+				2DB2EBF125005B41005B5669 /* AuthResult.swift in Sources */,
+				2DB2EBF525005B41005B5669 /* SearchFilter.swift in Sources */,
+				2DB2EBE725005B41005B5669 /* AccountProjectItem.swift in Sources */,
+				2DB2EBEF25005B41005B5669 /* AuthUserIdentity.swift in Sources */,
+				2DB2EBF725005B41005B5669 /* SearchOptions.swift in Sources */,
+				2DB2EBF925005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EBBE25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
