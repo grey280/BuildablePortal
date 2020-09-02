@@ -63,9 +63,9 @@ struct TimesheetView: View {
                 }
                 if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
                     Button(action: {
-                        self.searchOptions.pageNumber = (self.searchOptions.pageNumber ?? 1) + 1
-                        self.pager.pageNumber = (self.pager.pageNumber ?? 1) + 1
-                        self.reloadList()
+                        self.timesheet.searchOptions.pageNumber = (self.timesheet.searchOptions.pageNumber ?? 1) + 1
+                        self.timesheet.pager.pageNumber = (self.timesheet.pager.pageNumber ?? 1) + 1
+                        self.timesheet.load()
                     }) {
                         Text("Load more...")
                     }
@@ -141,7 +141,7 @@ enum networkFailureCondition: Error {
 #if DEBUG
 struct TimesheetView_Preview: PreviewProvider {
     static var previews: some View {
-        TimesheetView()
+        TimesheetView(timesheet: Timesheet())
     }
 }
 #endif
