@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct BuildablePortalApp: App {
+    @StateObject var auth: AuthService = AuthService.shared
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
-        }
+            TimesheetView()
+        }.environmentObject(auth)
     }
 }

@@ -35,34 +35,11 @@ struct TimesheetEntryCell: View {
     }
 }
 
-struct TimesheetDay: Identifiable {
-    let id = UUID()
-    let entries: [TimesheetEntry]
-    var title: String {
-        entries.first?.entryDateString ?? "Unknown"
-    }
-    var total: Double {
-        entries.map { $0.entryHours }.reduce(0, +)
-    }
-    var date: Date {
-        entries.first?.entryDate ?? Date()
-    }
-}
+
 
 struct TimesheetView: View {
     @State var isLoggingIn = false
     @State var authInfo: AuthResult = AuthResult() // this should be properly set up elsewhere, maybe with a BindableObject? dunno yet
-    
-    @StateObject var auth: AuthService = AuthService.shared
-    
-    @State var entries: [TimesheetEntry] = []
-    @State var days: [TimesheetDay] = []
-    @State var pager: Pager = Pager()
-    @State var searchOptions: SearchOptions = {
-        let so = SearchOptions()
-        so.pageSize = 100
-        return so
-    }()
     
     let cancelHolder = CancellableHolder()
     
@@ -118,13 +95,6 @@ struct TimesheetView: View {
         }
     }
     
-    func resetAndReload(){
-        self.searchOptions.pageNumber = 1
-        self.pager = Pager()
-        self.entries = []
-        self.reloadList()
-    }
-    
     func reloadList(){
         guard self.auth.loggedIn else {
             return
@@ -159,47 +129,38 @@ struct TimesheetView: View {
             })
     }
     
-    func updateDays(){
-        let allEntries = entries.sorted(by: { $0.entryDate < $1.entryDate })
-        let grouped = Dictionary(grouping: allEntries) { (entry: TimesheetEntry) -> String in
-            entry.entryDateString
-        }
-        
-        self.days = grouped.map { day -> TimesheetDay in
-            TimesheetDay(entries: day.value)
-        }.sorted { $0.date > $1.date }
-    }
     
-    func delete(at offsets: IndexSet, in day: TimesheetDay){
-        guard let dayIndex = self.days.firstIndex(where: { (innerDay) -> Bool in
-            innerDay.id == day.id
-        }) else {
-            print("Invalid day")
-            return
-        }
-        let items = offsets.map { self.days[dayIndex].entries[$0] }
-        cancelHolder.cancellable?.cancel()
-        guard let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk") else {
-            return
-        }
-        cancelHolder.cancellable = CacheService.deleteBulk(items, route: url)
-            .sink(receiveCompletion: { (completion) in
-                print(completion)
-            }, receiveValue: { (_) in
-                print("value")
-                self.resetAndReload()
-            })
-        // temporarily inaccurate, but makes the animation snappier, so we'll do it
-        self.entries.removeAll { (entry) -> Bool in
-            if let _ = items.firstIndex(where: { (entry2) -> Bool in
-                entry.id == entry2.id
-            }) {
-                return true
-            }
-            return false
-        }
-        self.updateDays()
-    }
+    
+//    func delete(at offsets: IndexSet, in day: TimesheetDay){
+//        guard let dayIndex = self.days.firstIndex(where: { (innerDay) -> Bool in
+//            innerDay.id == day.id
+//        }) else {
+//            print("Invalid day")
+//            return
+//        }
+//        let items = offsets.map { self.days[dayIndex].entries[$0] }
+//        cancelHolder.cancellable?.cancel()
+//        guard let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk") else {
+//            return
+//        }
+//        cancelHolder.cancellable = CacheService.deleteBulk(items, route: url)
+//            .sink(receiveCompletion: { (completion) in
+//                print(completion)
+//            }, receiveValue: { (_) in
+//                print("value")
+//                self.resetAndReload()
+//            })
+//        // temporarily inaccurate, but makes the animation snappier, so we'll do it
+//        self.entries.removeAll { (entry) -> Bool in
+//            if let _ = items.firstIndex(where: { (entry2) -> Bool in
+//                entry.id == entry2.id
+//            }) {
+//                return true
+//            }
+//            return false
+//        }
+//        self.updateDays()
+//    }
 }
 
 enum networkFailureCondition: Error {
