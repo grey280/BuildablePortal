@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct TimesheetEntryView: View {
+    @ObservedObject var timesheet: Timesheet
+    
+    
     var isNew: Bool{
         return timesheetEntry.id == 0
     }
@@ -28,8 +31,6 @@ struct TimesheetEntryView: View {
         f.numberStyle = .decimal
         return f
     }()
-    
-    let cancelHolder = CancellableHolder()
     
     var body: some View {
         Form{
@@ -67,48 +68,20 @@ struct TimesheetEntryView: View {
         .navigationBarTitle(Text(isNew ? "New Entry" : "Edit Entry"), displayMode: .inline)
         .navigationBarItems(trailing: Button(action: {
             self.timesheetEntry.systemUserID = AuthService.shared.authInfo?.userID ?? 0
-            if (self.isNew){
-                guard let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/") else {
-                    return
+            self.timesheet.upsert(self.timesheetEntry) { (completion) in
+                switch completion{
+                case .failure(let error):
+                    self.error = error.localizedDescription
+                    self.hasError = true
+                case .finished:
+                    if (!self.hasError){
+                        self.onSave?()
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
                 }
-                self.cancelHolder.cancellable = CacheService.post(self.timesheetEntry, route: url)
-                .print("post: ")
-                    .sink(receiveCompletion: { (completion) in
-                        switch completion{
-                        case .failure(let error):
-                            self.error = error.localizedDescription
-                            self.hasError = true
-                        case .finished:
-                            if (!self.hasError){
-                                self.onSave?()
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }
-                    }, receiveValue: { (value) in
-                        print(value)
-                    })
-            } else {
-                guard let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/\(self.timesheetEntry.id)") else {
-                    return
-                }
-                self.cancelHolder.cancellable = CacheService.put(self.timesheetEntry, route: url)
-                    .print("put: ")
-                    .sink(receiveCompletion: { (completion) in
-                        switch completion{
-                        case .failure(let error):
-                            self.error = error.localizedDescription
-                            self.hasError = true
-                        case .finished:
-                            if (!self.hasError){
-                                self.onSave?()
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                        }
-                    }, receiveValue: { (value) in
-                        print(value)
-                    })
+            } receiveValue: { (value) in
+                print(value)
             }
-//            self.presentationMode.wrappedValue.dismiss()
         }) { Text("Save").padding().hoverEffect() })
             .alert(isPresented: self.$hasError) { () -> Alert in
                 Alert(title: Text("Unable to save"), message: Text(self.error ?? "Unknown error"), dismissButton: nil)

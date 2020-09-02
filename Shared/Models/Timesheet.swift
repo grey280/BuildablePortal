@@ -11,6 +11,7 @@ import Combine
 class Timesheet : ObservableObject {
     private var loadRequest: AnyCancellable?
     private var deleteRequest: AnyCancellable?
+    private var upsertRequests: [AnyCancellable] = []
     
     @Published var entries: [TimesheetEntry] = []
 
@@ -74,6 +75,21 @@ class Timesheet : ObservableObject {
         pager = Pager()
         searchOptions.pageNumber = 1
         load()
+    }
+    
+    func upsert(_ entry: TimesheetEntry, completion: @escaping ((Subscribers.Completion<NetworkError>) -> Void), receiveValue: @escaping ((TimesheetEntry) -> Void)) {
+        // TODO: Update-in-place? Shouldn't be necessary, already happened because it's a class, so they're all references.
+//        if let index = entries.firstIndex {
+//            $0.id == entry.id
+//        } {
+//            entries[index] = entry
+//        }
+        let url = entry.id == 0 ? URL(string: "https://portal.buildableworks.com/api/User/Timeclock/")! : URL(string: "https://portal.buildableworks.com/api/User/Timeclock/\(entry.id)")!
+        let newRequest = entry.id == 0 ? CacheService.post(entry, route: url) : CacheService.put(entry, route: url)
+        let sank = newRequest
+            .sink(receiveCompletion: completion, receiveValue: receiveValue)
+        // stores it internally, so if the return doesn't get stored it doesn't get deinit-cancelled
+        self.upsertRequests.append(sank)
     }
     
     private func updateDays(){
