@@ -38,9 +38,6 @@ struct TimesheetEntryCell: View {
 
 
 struct TimesheetView: View {
-    @State var isLoggingIn = false
-    @State var authInfo: AuthResult = AuthResult() // this should be properly set up elsewhere, maybe with a BindableObject? dunno yet
-    
     @ObservedObject var timesheet: Timesheet
     @ObservedObject var auth = AuthService.shared
     
@@ -50,9 +47,7 @@ struct TimesheetView: View {
                 ForEach(timesheet.days) { (day) in
                     Section(header: Text("\(day.title): \(TimesheetEntryCell.formatter.string(from: NSNumber(value: day.total)) ?? "0") hours")) {
                         ForEach(day.entries) { (entry) in
-                            NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: entry, onSave: {
-                                self.timesheet.clear()
-                            })) {
+                            NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: entry)) {
                                 TimesheetEntryCell(entry: entry)
                             }
                         }
@@ -61,15 +56,15 @@ struct TimesheetView: View {
                         }
                     }
                 }
-                if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
-                    Button(action: {
-                        self.timesheet.searchOptions.pageNumber = (self.timesheet.searchOptions.pageNumber ?? 1) + 1
-                        self.timesheet.pager.pageNumber = (self.timesheet.pager.pageNumber ?? 1) + 1
-                        self.timesheet.load()
-                    }) {
-                        Text("Load more...")
-                    }
-                }
+//                if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
+//                    Button(action: {
+//                        self.timesheet.searchOptions.pageNumber = (self.timesheet.searchOptions.pageNumber ?? 1) + 1
+//                        self.timesheet.pager.pageNumber = (self.timesheet.pager.pageNumber ?? 1) + 1
+//                        self.timesheet.load()
+//                    }) {
+//                        Text("Load more...")
+//                    }
+//                }
             }
             .navigationBarTitle(Text("Time Clock"))
             .navigationBarItems(
@@ -84,13 +79,7 @@ struct TimesheetView: View {
                         Image(systemName: "plus")
                     }).padding().hoverEffect()
             )
-        }.sheet(isPresented: self.$auth.needsLogin) {
-            LoginView().onDisappear(
-                perform: self.timesheet.clear
-            )
         }.onAppear {
-            self.timesheet.clear()
-        }.onReceive(self.auth.objectWillChange) { (_) in
             self.timesheet.clear()
         }
     }

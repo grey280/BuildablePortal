@@ -10,10 +10,15 @@ import SwiftUI
 @main
 struct BuildablePortalApp: App {
     @StateObject var timesheet = Timesheet()
+    @ObservedObject var auth = AuthService.shared
     
     var body: some Scene {
         WindowGroup {
-            TimesheetView(timesheet: timesheet)
+            if (auth.needsLogin){
+                LoginView()
+            } else {
+                TimesheetView(timesheet: timesheet)
+            }
         }
     }
 }
