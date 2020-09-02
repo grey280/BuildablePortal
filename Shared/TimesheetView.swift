@@ -50,7 +50,7 @@ struct TimesheetView: View {
                 ForEach(timesheet.days) { (day) in
                     Section(header: Text("\(day.title): \(TimesheetEntryCell.formatter.string(from: NSNumber(value: day.total)) ?? "0") hours")) {
                         ForEach(day.entries) { (entry) in
-                            NavigationLink(destination: TimesheetEntryView(timesheetEntry: entry, onSave: {
+                            NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: entry, onSave: {
                                 self.timesheet.clear()
                             })) {
                                 TimesheetEntryCell(entry: entry)
@@ -80,9 +80,7 @@ struct TimesheetView: View {
                         Image(systemName: "arrow.clockwise")
                     }).padding().hoverEffect(),
                 trailing:
-                    NavigationLink(destination: TimesheetEntryView(timesheetEntry: TimesheetEntry(), onSave: {
-                        self.timesheet.clear()
-                    }), label: {
+                    NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: TimesheetEntry()), label: {
                         Image(systemName: "plus")
                     }).padding().hoverEffect()
             )

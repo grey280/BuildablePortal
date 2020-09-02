@@ -11,7 +11,6 @@ import SwiftUI
 struct TimesheetEntryView: View {
     @ObservedObject var timesheet: Timesheet
     
-    
     var isNew: Bool{
         return timesheetEntry.id == 0
     }
@@ -23,8 +22,6 @@ struct TimesheetEntryView: View {
     @State var error: String? = nil
     
     @Environment(\.presentationMode) var presentationMode
-    
-    let onSave: (() -> Void)?
     
     let formatter: NumberFormatter = {
         let f = NumberFormatter()
@@ -75,7 +72,6 @@ struct TimesheetEntryView: View {
                     self.hasError = true
                 case .finished:
                     if (!self.hasError){
-                        self.onSave?()
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 }
