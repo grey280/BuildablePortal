@@ -41,8 +41,6 @@ struct TimesheetView: View {
     @State var isLoggingIn = false
     @State var authInfo: AuthResult = AuthResult() // this should be properly set up elsewhere, maybe with a BindableObject? dunno yet
     
-    let cancelHolder = CancellableHolder()
-    
     var body: some View {
         return NavigationView {
             List {
@@ -95,39 +93,7 @@ struct TimesheetView: View {
         }
     }
     
-    func reloadList(){
-        guard self.auth.loggedIn else {
-            return
-        }
-        // want to hit "https://portal.buildableworks.com/api/User/Timeclock/getItems" with a SearchOptions and the headers set
-        guard let getURL = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/getItems") else {
-            return
-        }
-        cancelHolder.cancellable?.cancel()
-        cancelHolder.cancellable = CacheService.getItems(self.searchOptions, route: getURL)
-            .sink(receiveCompletion: { (completion) in
-                print(completion)
-                switch(completion){
-                case .failure(let error):
-                    switch (error){
-                    case .unauthorized:
-                        self.auth.loggedIn = false
-                    default:
-                        break
-                    }
-                default:
-                    break
-                    // do nothing
-                }
-            }, receiveValue: { (values: [TimesheetEntry]) in
-                print("Received new timesheet entries")
-                
-                self.pager = values.last?.pager ?? self.pager
-                let newValues = values.dropLast() // pager
-                self.entries.append(contentsOf: Array(newValues))
-                self.updateDays()
-            })
-    }
+    
     
     
     
@@ -166,10 +132,6 @@ struct TimesheetView: View {
 enum networkFailureCondition: Error {
     // 401, parsing failure, generic, 403
     case unauthorized, invalidResponse, unknown, forbidden
-}
-
-class CancellableHolder{
-    var cancellable: AnyCancellable?
 }
 
 #if DEBUG
