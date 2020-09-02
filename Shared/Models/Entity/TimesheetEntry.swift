@@ -14,7 +14,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         
     }
     
-    private let cancelHolder = CancellableHolder()
+    private var networkRequest: AnyCancellable?
     
     // MARK: Inherited
     @Published var selected: Bool = false
@@ -34,15 +34,13 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
     var accountProjectID: AccountProject.ID = -1{ // from accountProjectId {
         didSet {
             objectWillChange.send()
-            guard let getURL = URL(string: "https://portal.buildableworks.com/api/Account/AccountProjectItems/getItems") else {
-                return
-            }
+            let getURL = URL(string: "https://portal.buildableworks.com/api/Account/AccountProjectItems/getItems")!
             let options = SearchOptions()
             options.pagingDisabled = true
             let fields = SearchFields()
             fields.accountProjectID = self.accountProjectID
             options.fields = fields
-            self.cancelHolder.cancellable = CacheService.getItems(options, route: getURL)
+            self.networkRequest = CacheService.getItems(options, route: getURL)
                 .print("accountProjectItems.getItems:")
                 .catch { error -> Just<[AccountProjectItem]?> in
                     print(error)
