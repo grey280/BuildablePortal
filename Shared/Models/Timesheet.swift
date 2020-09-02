@@ -101,7 +101,7 @@ class Timesheet : ObservableObject {
         deleteRequest = CacheService.deleteBulk(items, route: url)
             .sink(receiveCompletion: { (completion) in
                 print(completion)
-                _loading -= 1
+                self._loading -= 1
             }, receiveValue: { (_) in
                 print("value")
                 self.clear()
