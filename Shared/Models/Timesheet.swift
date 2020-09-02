@@ -36,7 +36,7 @@ class Timesheet : ObservableObject {
             return
         }
         
-        _loading++
+        _loading += 1
         
         // want to hit "https://portal.buildableworks.com/api/User/Timeclock/getItems" with a SearchOptions and the headers set
         let getURL = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/getItems")!
@@ -45,7 +45,7 @@ class Timesheet : ObservableObject {
         loadRequest = CacheService.getItems(self.searchOptions, route: getURL)
             .sink(receiveCompletion: { (completion) in
                 print(completion)
-                self._loading--
+                self._loading -= 1
                 switch(completion){
                 case .failure(let error):
                     switch (error){
@@ -96,12 +96,12 @@ class Timesheet : ObservableObject {
         }
         let items = offsets.map { self.days[dayIndex].entries[$0] }
         deleteRequest?.cancel()
-        _loading++
+        _loading += 1
         let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk")!
         deleteRequest = CacheService.deleteBulk(items, route: url)
             .sink(receiveCompletion: { (completion) in
                 print(completion)
-                _loading--
+                _loading -= 1
             }, receiveValue: { (_) in
                 print("value")
                 self.clear()
