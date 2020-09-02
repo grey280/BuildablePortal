@@ -56,9 +56,9 @@ struct TimesheetView: View {
                                 TimesheetEntryCell(entry: entry)
                             }
                         }
-//                        .onDelete { (indices) in
-//                            self.delete(at: indices, in: day)
-//                        }
+                        .onDelete { (indices) in
+                            self.timesheet.delete(at: indices, in: day)
+                        }
                     }
                 }
                 if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
@@ -96,41 +96,6 @@ struct TimesheetView: View {
             self.timesheet.clear()
         }
     }
-    
-    
-    
-    
-    
-//    func delete(at offsets: IndexSet, in day: TimesheetDay){
-//        guard let dayIndex = self.days.firstIndex(where: { (innerDay) -> Bool in
-//            innerDay.id == day.id
-//        }) else {
-//            print("Invalid day")
-//            return
-//        }
-//        let items = offsets.map { self.days[dayIndex].entries[$0] }
-//        cancelHolder.cancellable?.cancel()
-//        guard let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk") else {
-//            return
-//        }
-//        cancelHolder.cancellable = CacheService.deleteBulk(items, route: url)
-//            .sink(receiveCompletion: { (completion) in
-//                print(completion)
-//            }, receiveValue: { (_) in
-//                print("value")
-//                self.resetAndReload()
-//            })
-//        // temporarily inaccurate, but makes the animation snappier, so we'll do it
-//        self.entries.removeAll { (entry) -> Bool in
-//            if let _ = items.firstIndex(where: { (entry2) -> Bool in
-//                entry.id == entry2.id
-//            }) {
-//                return true
-//            }
-//            return false
-//        }
-//        self.updateDays()
-//    }
 }
 
 enum networkFailureCondition: Error {

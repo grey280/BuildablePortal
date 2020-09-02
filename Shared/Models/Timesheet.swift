@@ -10,6 +10,7 @@ import Combine
 
 class Timesheet : ObservableObject {
     private var loadRequest: AnyCancellable?
+    private var deleteRequest: AnyCancellable?
     
     @Published var entries: [TimesheetEntry] = []
 
@@ -76,6 +77,35 @@ class Timesheet : ObservableObject {
         self.days = grouped.map { day -> TimesheetDay in
             TimesheetDay(entries: day.value)
         }.sorted { $0.date > $1.date }
+    }
+    
+    func delete(at offsets: IndexSet, in day: TimesheetDay){
+        guard let dayIndex = self.days.firstIndex(where: { (innerDay) -> Bool in
+            innerDay.id == day.id
+        }) else {
+            print("Invalid day")
+            return
+        }
+        let items = offsets.map { self.days[dayIndex].entries[$0] }
+        deleteRequest?.cancel()
+        let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk")!
+        deleteRequest = CacheService.deleteBulk(items, route: url)
+            .sink(receiveCompletion: { (completion) in
+                print(completion)
+            }, receiveValue: { (_) in
+                print("value")
+                self.clear()
+            })
+        // temporarily inaccurate, but makes the animation snappier, so we'll do it
+        self.entries.removeAll { (entry) -> Bool in
+            if let _ = items.firstIndex(where: { (entry2) -> Bool in
+                entry.id == entry2.id
+            }) {
+                return true
+            }
+            return false
+        }
+        self.updateDays()
     }
 }
 
