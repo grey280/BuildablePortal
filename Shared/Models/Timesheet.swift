@@ -83,21 +83,28 @@ class Timesheet : ObservableObject {
         entries = []
         days = []
         pager = Pager()
-        searchOptions.pageNumber = 1
+        searchOptions.pageNumber = 0
         load()
     }
     
-    func upsert(_ entry: TimesheetEntry, completion: @escaping ((Subscribers.Completion<NetworkError>) -> Void), receiveValue: @escaping ((TimesheetEntry) -> Void)) {
-        // TODO: Update-in-place? Shouldn't be necessary, already happened because it's a class, so they're all references.
-//        if let index = entries.firstIndex {
-//            $0.id == entry.id
-//        } {
-//            entries[index] = entry
-//        }
+    func upsert(_ entry: TimesheetEntry, completion: @escaping ((Subscribers.Completion<NetworkError>) -> Void), receiveValue: ((TimesheetEntry) -> Void)?) {
+        let wasAddition = entry.id == 0
         let url = entry.id == 0 ? URL(string: "https://portal.buildableworks.com/api/User/Timeclock/")! : URL(string: "https://portal.buildableworks.com/api/User/Timeclock/\(entry.id)")!
         let newRequest = entry.id == 0 ? CacheService.post(entry, route: url) : CacheService.put(entry, route: url)
         let sank = newRequest
-            .sink(receiveCompletion: completion, receiveValue: receiveValue)
+            .sink(receiveCompletion: completion) { (entry) in
+                if (wasAddition){
+                    self.entries.append(entry)
+                    self.updateDays()
+                } else {
+                    if let index = self.entries.firstIndex(of: entry) {
+                        self.entries[index] = entry
+                        self.updateDays()
+                    }
+                }
+                
+                receiveValue?(entry)
+            }
         // stores it internally, so if the return doesn't get stored it doesn't get deinit-cancelled
         self.upsertRequests.append(sank)
     }
