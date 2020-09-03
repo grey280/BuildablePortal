@@ -27,7 +27,7 @@ struct TimesheetEntryCell: View {
             }
             HStack {
                 Circle().fill(Color(entry.timesheetActivityColor ?? "brand-blue")).frame(width: 5, height: 5, alignment: .leading)
-                Text(entry.timesheetActivityName!).font(.footnote)
+                Text(entry.timesheetActivityName ?? "Unknown").font(.footnote)
                 Spacer()
                 Text(entry.entryDateString).font(.footnote)
             }
