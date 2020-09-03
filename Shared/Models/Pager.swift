@@ -10,9 +10,9 @@ import Foundation
 
 class Pager: Codable {
     var pageSize: Int? = 100
-    var pageNumber: Int? = 1
+    var pageNumber: Int? = 0
     var totalItems: Int? = 0
-    var totalPages: Int? = 2
+    var totalPages: Int?
     var pages: [Int]? = []
     var itemStart: Int? = 1
     var itemEnd: Int? = 1

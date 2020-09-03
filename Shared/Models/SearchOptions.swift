@@ -10,7 +10,7 @@ import Foundation
 
 class SearchOptions: Codable {
     // inherited from base
-    var pageNumber: Int? = 1
+    var pageNumber: Int? = 0
     var pageSize: Int? = 20
     var pagingDisabled: Bool?
     var filterText: String?

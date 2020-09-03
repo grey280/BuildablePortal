@@ -48,7 +48,11 @@ struct TimesheetView: View {
                     Section(header: Text("\(day.title): \(TimesheetEntryCell.formatter.string(from: NSNumber(value: day.total)) ?? "0") hours")) {
                         ForEach(day.entries) { (entry) in
                             NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: entry)) {
-                                TimesheetEntryCell(entry: entry)
+                                TimesheetEntryCell(entry: entry).onAppear(perform: {
+                                    if self.timesheet.entries.last == entry {
+                                        self.timesheet.load()
+                                    }
+                                })
                             }
                         }
                         .onDelete { (indices) in

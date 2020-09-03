@@ -158,3 +158,9 @@ extension TimesheetEntry: Encodable {
         try container.encode(timesheetActivityColor, forKey: .timesheetActivityColor)
     }
 }
+
+extension TimesheetEntry: Equatable {
+    static func == (lhs: TimesheetEntry, rhs: TimesheetEntry) -> Bool {
+        lhs.id == rhs.id
+    }
+}

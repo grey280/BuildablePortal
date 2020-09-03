@@ -42,6 +42,9 @@ class Timesheet : ObservableObject {
             return
         }
         
+        self.searchOptions.pageNumber = (self.searchOptions.pageNumber ?? 0) + 1
+        self.pager.pageNumber = (self.pager.pageNumber ?? 0) + 1
+        
         _loading += 1
         
         // want to hit "https://portal.buildableworks.com/api/User/Timeclock/getItems" with a SearchOptions and the headers set
