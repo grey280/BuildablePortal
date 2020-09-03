@@ -287,13 +287,13 @@ class AuthService: ObservableObject {
         
     }
     
-    public var loggedIn = true{
+    public var loggedIn = false {
         willSet{
             needsLogin = !newValue
             objectWillChange.send()
         }
     }
-    @Published public var needsLogin = false
+    @Published public var needsLogin = true
     @Published public var authInfo: AuthResult? = nil
     
     private let formatter: DateFormatter = {
