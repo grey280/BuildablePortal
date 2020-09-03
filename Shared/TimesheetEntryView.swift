@@ -8,6 +8,25 @@
 
 import SwiftUI
 
+struct AccountProjectCellView: View {
+    let accountProject: AccountProject
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Circle().fill(Color(accountProject.isCurrent ? "green" : "")).frame(width: 5, height: 5, alignment: .leading)
+                Text(accountProject.name ?? "Unknown")
+                Spacer()
+            }
+            if let dStart = accountProject.dateStart, let dEnd = accountProject.dateEnd {
+                Text("\(dStart, style: .date)-\(dEnd, style: .date)").font(.footnote)
+            } else if let dStart = accountProject.dateStart {
+                Text("\(dStart, style: .date)-(no end date)").font(.footnote)
+            }
+        }
+    }
+}
+
 struct TimesheetEntryView: View {
     @ObservedObject var timesheet: Timesheet
     
@@ -42,8 +61,8 @@ struct TimesheetEntryView: View {
                         return aEnd > bEnd
                     }
                     return a.ID! > b.ID!
-                }), id: \.ID) {
-                    Text("\($0.name ?? "Unknown") \($0.isCurrent ? "CURRENT" : "")").tag($0.ID ?? -1)
+                }), id: \.ID) { accountProject in
+                    AccountProjectCellView(accountProject: accountProject).tag(accountProject.ID ?? -1)
                 }
             }.disabled(timesheetEntry.accountProjectAccountID == 0 || timesheetEntry.accountProjectAccountID == nil)
             if (timesheetEntry.accountProjectItems != nil && timesheetEntry.accountProjectItems!.count > 0) {
