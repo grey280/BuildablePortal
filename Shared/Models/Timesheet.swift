@@ -7,8 +7,11 @@
 
 import Foundation
 import Combine
+import os.log
 
 class Timesheet : ObservableObject {
+    private let logger = Logger(subsystem: "com.buildableworks.portal", category: "timesheet")
+    
     private var loadRequest: AnyCancellable?
     private var deleteRequest: AnyCancellable?
     private var upsertRequests: [AnyCancellable] = []
@@ -30,10 +33,12 @@ class Timesheet : ObservableObject {
     
     func load(){
         guard AuthService.shared.loggedIn else {
+            logger.debug("Not logged in; skipping load")
             return
         }
         
         guard pager.totalPages == nil || (pager.pageNumber ?? 1) < pager.totalPages! else {
+            logger.debug("On last page; skipping load")
             return
         }
         
@@ -45,14 +50,16 @@ class Timesheet : ObservableObject {
         loadRequest?.cancel()
         loadRequest = CacheService.getItems(self.searchOptions, route: getURL)
             .sink(receiveCompletion: { (completion) in
-                print(completion)
+                self.logger.debug("load() Got completion")
                 self._loading -= 1
                 switch(completion){
                 case .failure(let error):
                     switch (error){
                     case .unauthorized:
+                        self.logger.debug(("load() got error: unauthorized"))
                         AuthService.shared.loggedIn = false
                     default:
+                        self.logger.error(("load() got error: \(error.localizedDescription, privacy: .public)"))
                         break
                     }
                 default:
@@ -60,7 +67,7 @@ class Timesheet : ObservableObject {
                     // do nothing
                 }
             }, receiveValue: { (values: [TimesheetEntry]) in
-                print("Received new timesheet entries")
+                self.logger.debug("Received new timesheet entries")
                 
                 self.pager = values.last?.pager ?? self.pager
                 let newValues = values.dropLast() // pager
@@ -107,7 +114,7 @@ class Timesheet : ObservableObject {
         guard let dayIndex = self.days.firstIndex(where: { (innerDay) -> Bool in
             innerDay.id == day.id
         }) else {
-            print("Invalid day")
+            logger.error("Invalid day \(day.date, privacy: .public); not saving")
             return
         }
         let items = offsets.map { self.days[dayIndex].entries[$0] }
@@ -116,10 +123,10 @@ class Timesheet : ObservableObject {
         let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk")!
         deleteRequest = CacheService.deleteBulk(items, route: url)
             .sink(receiveCompletion: { (completion) in
-                print(completion)
+                self.logger.debug("delete() Received completion")
                 self._loading -= 1
             }, receiveValue: { (_) in
-                print("value")
+                self.logger.debug("delete() Received value")
                 self.clear()
             })
         // temporarily inaccurate, but makes the animation snappier, so we'll do it
