@@ -47,6 +47,9 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
                     let res: [AccountProjectItem]? = []
                     return Just(res)
                 }
+                .map {
+                    $0?.dropLast() // pager
+                }
                 .assign(to: \.accountProjectItems, on: self)
         }
     }
