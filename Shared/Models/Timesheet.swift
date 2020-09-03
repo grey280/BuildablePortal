@@ -38,7 +38,7 @@ class Timesheet : ObservableObject {
         }
         
         guard pager.totalPages == nil || (pager.pageNumber ?? 1) < pager.totalPages! else {
-            logger.debug("On last page; skipping load")
+            logger.debug("On last page; skipping load. Page \(self.pager.pageNumber ?? -1, privacy: .public), total \(self.pager.totalPages ?? -1, privacy: .public)")
             return
         }
         
