@@ -25,6 +25,12 @@ class AccountProject: Codable {
     var dateStart: Date?
     var dateEnd: Date?
     var accountName: String? // notmapped
+    var isCurrent: Bool {
+        guard let dateEnd = dateEnd else {
+            return true
+        }
+        return dateEnd > Date()
+    }
     
     enum CodingKeys: String, CodingKey {
         case timesheetEntries, ID = "accountProjectId", accountID = "accountId", name, description, isActive, dateAdded, dateModified, isBillable, dateStart, dateEnd, accountName

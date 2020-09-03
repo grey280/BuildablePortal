@@ -37,12 +37,16 @@ struct TimesheetEntryView: View {
                 }
             }
             Picker(selection: $timesheetEntry.accountProjectID, label: Text("Project")) {
-                ForEach(cache.cachedAccountProjects.filter { $0.accountID == self.timesheetEntry.accountID }, id: \.ID) {
-                    Text($0.name ?? "Unknown").tag($0.ID ?? -1)
+                ForEach(cache.cachedAccountProjects.filter { $0.accountID == self.timesheetEntry.accountID }.sorted(by: { (a, b) -> Bool in
+                    if let aEnd = a.dateEnd, let bEnd = b.dateEnd {
+                        return aEnd > bEnd
+                    }
+                    return a.ID! > b.ID!
+                }), id: \.ID) {
+                    Text("\($0.name ?? "Unknown") \($0.isCurrent ? "CURRENT" : "")").tag($0.ID ?? -1)
                 }
             }.disabled(timesheetEntry.accountProjectAccountID == 0 || timesheetEntry.accountProjectAccountID == nil)
-            if (timesheetEntry.accountProjectItems != nil && timesheetEntry.accountProjectItems!.count > 1) {
-                // > 1 because the Pager item is in there
+            if (timesheetEntry.accountProjectItems != nil && timesheetEntry.accountProjectItems!.count > 0) {
                 Picker(selection: $timesheetEntry.accountProjectItemID, label: Text("Project Item")) {
                     ForEach(timesheetEntry.accountProjectItems!, id: \.id) {
                         Text("\(String(format: "%.2f", arguments: [($0.itemNumber ?? 1.01)])) - \($0.deliverable ?? "Unknown")").tag($0.id ?? -1)
