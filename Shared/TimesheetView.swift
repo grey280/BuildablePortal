@@ -60,15 +60,9 @@ struct TimesheetView: View {
                         }
                     }
                 }
-//                if ((self.timesheet.pager.totalItems ?? 0) > self.timesheet.entries.count){
-//                    Button(action: {
-//                        self.timesheet.searchOptions.pageNumber = (self.timesheet.searchOptions.pageNumber ?? 1) + 1
-//                        self.timesheet.pager.pageNumber = (self.timesheet.pager.pageNumber ?? 1) + 1
-//                        self.timesheet.load()
-//                    }) {
-//                        Text("Load more...")
-//                    }
-//                }
+                if (self.timesheet.loading){
+                    ProgressView("Loading...")
+                }
             }
             .navigationBarTitle(Text("Time Clock"))
             .navigationBarItems(
