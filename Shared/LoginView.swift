@@ -9,20 +9,37 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var username: String = "gpatterson@buildableworks.com"
+    @State var username: String = ""
     @State var password: String = ""
+    @AppStorage("rememberMe") var rememberMe = false
+    
+    @AppStorage("rememberedEmail") var rememberedEmail = ""
+    @AppStorage("rememberedPassword") var rememberedPassword = ""
     
     var body: some View {
         NavigationView {
             Form {
                 TextField("Username", text: $username).textContentType(.username)
                 SecureField("Password", text: $password).textContentType(.password)
+                Toggle("Remember me", isOn: $rememberMe)
                 Button(action: {
                     AuthService.shared.login(username: self.username, password: self.password)
+                    if (rememberMe){
+                        rememberedEmail = username
+                        rememberedPassword = password
+                    } else {
+                        rememberedEmail = ""
+                        rememberedPassword = ""
+                    }
                 }) {
                     Text("Login")
                 }.disabled(!canLogin)
             }.navigationBarTitle(Text("Log In"))
+        }.onAppear{
+            if (rememberMe){
+                username = rememberedEmail
+                password = rememberedPassword
+            }
         }
     }
     
