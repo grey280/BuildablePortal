@@ -147,7 +147,10 @@ class Timesheet : ObservableObject {
 
 
 struct TimesheetDay: Identifiable {
-    let id = UUID()
+    var id: Date {
+        entries[0].entryDate
+    }
+    
     let entries: [TimesheetEntry]
     var title: String {
         entries.first?.entryDateString ?? "Unknown"
