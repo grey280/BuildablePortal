@@ -149,6 +149,9 @@
 		2D92548C250697650025901B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2DB2EC0A25005CC7005B5669 /* TimesheetEntryView.swift */,
+				2DB2EC0725005CBF005B5669 /* LoginView.swift */,
+				2DB2EC0B25005CC7005B5669 /* TimesheetView.swift */,
 				2D92548D2506977A0025901B /* AccountProjectCellView.swift */,
 				2D925490250699710025901B /* TimesheetEntryCell.swift */,
 			);
@@ -174,9 +177,6 @@
 				2DB2EBFA25005B5A005B5669 /* Helpers */,
 				2DB2EBD125005B41005B5669 /* Models */,
 				2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */,
-				2DB2EC0725005CBF005B5669 /* LoginView.swift */,
-				2DB2EC0A25005CC7005B5669 /* TimesheetEntryView.swift */,
-				2DB2EC0B25005CC7005B5669 /* TimesheetView.swift */,
 				2DB2EB9625005A36005B5669 /* Assets.xcassets */,
 			);
 			path = Shared;
