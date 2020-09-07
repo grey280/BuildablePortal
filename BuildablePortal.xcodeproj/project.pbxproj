@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D92548E2506977A0025901B /* AccountProjectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D92548D2506977A0025901B /* AccountProjectCellView.swift */; };
+		2D92548F2506977A0025901B /* AccountProjectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D92548D2506977A0025901B /* AccountProjectCellView.swift */; };
 		2DB2EBB025005A36005B5669 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBAF25005A36005B5669 /* Tests_iOS.swift */; };
 		2DB2EBBB25005A36005B5669 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBBA25005A36005B5669 /* Tests_macOS.swift */; };
 		2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */; };
@@ -73,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D92548D2506977A0025901B /* AccountProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountProjectCellView.swift; path = Views/AccountProjectCellView.swift; sourceTree = "<group>"; };
 		2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildablePortalApp.swift; sourceTree = "<group>"; };
 		2DB2EB9625005A36005B5669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DB2EB9B25005A36005B5669 /* BuildablePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildablePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +143,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D92548C250697650025901B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		2DB2EB8E25005A36005B5669 = {
 			isa = PBXGroup;
 			children = (
@@ -155,11 +165,13 @@
 		2DB2EB9325005A36005B5669 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				2D92548C250697650025901B /* Views */,
 				2DB2EBFA25005B5A005B5669 /* Helpers */,
 				2DB2EBD125005B41005B5669 /* Models */,
 				2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */,
 				2DB2EC0725005CBF005B5669 /* LoginView.swift */,
 				2DB2EC0A25005CC7005B5669 /* TimesheetEntryView.swift */,
+				2D92548D2506977A0025901B /* AccountProjectCellView.swift */,
 				2DB2EC0B25005CC7005B5669 /* TimesheetView.swift */,
 				2DB2EB9625005A36005B5669 /* Assets.xcassets */,
 			);
@@ -416,6 +428,7 @@
 				2DB2EBE025005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE225005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EC0225005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */,
+				2D92548E2506977A0025901B /* AccountProjectCellView.swift in Sources */,
 				2DB2EC0C25005CC7005B5669 /* TimesheetEntryView.swift in Sources */,
 				2DB2EC0525005BC6005B5669 /* Timesheet.swift in Sources */,
 				2DB2EC0E25005CC7005B5669 /* TimesheetView.swift in Sources */,
@@ -444,6 +457,7 @@
 				2DB2EBE125005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE325005B41005B5669 /* Pager.swift in Sources */,
 				2DB2EC0325005B5A005B5669 /* DateFormatter+Extensions.swift in Sources */,
+				2D92548F2506977A0025901B /* AccountProjectCellView.swift in Sources */,
 				2DB2EC0D25005CC7005B5669 /* TimesheetEntryView.swift in Sources */,
 				2DB2EC0625005BC6005B5669 /* Timesheet.swift in Sources */,
 				2DB2EC0F25005CC7005B5669 /* TimesheetView.swift in Sources */,
