@@ -32,6 +32,34 @@ class Network {
         }
     }
     
+    private static func parseClientResponse(_ response: Int) throws {
+        if (response < 400){
+            return
+        }
+        switch (response){
+        case 400:
+            throw NetworkError.badRequest
+        case 401:
+            throw NetworkError.unauthorized
+        case 403:
+            throw NetworkError.forbidden
+        case 404:
+            throw NetworkError.notFound
+        case 500:
+            throw NetworkError.internalServerError
+        case 501:
+            throw NetworkError.notImplemented
+        case 502:
+            throw NetworkError.badGateway
+        case 503:
+            throw NetworkError.serviceUnavailable
+        case 504:
+            throw NetworkError.gatewayTimeout
+        default:
+            throw NetworkError.unknown
+        }
+    }
+    
     static func getItems<T: Decodable>(_ options: SearchOptions?, route: URL) -> AnyPublisher<T, NetworkError>{
         print("getItems(\(String(describing: options)), \(route))")
         var request = URLRequest(url: route)
@@ -49,7 +77,7 @@ class Network {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.unknown
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(httpResponse.statusCode)
                 return data
             }
             .decode(type: T.self, decoder: decoder)
@@ -93,7 +121,7 @@ class Network {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.unknown
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(httpResponse.statusCode)
                 return data
             }
             .decode(type: T.self, decoder: decoder)
@@ -120,7 +148,7 @@ class Network {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.unknown
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(httpResponse.statusCode)
                 return data
             }
             .mapError { (originalError) -> NetworkError in
@@ -151,7 +179,7 @@ class Network {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.unknown
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(httpResponse.statusCode)
                 return data
             }
             .mapError { (originalError) -> NetworkError in
@@ -181,7 +209,7 @@ class Network {
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError.unknown
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(httpResponse.statusCode)
                 return data
             }
             .decode(type: [ListResultItem].self, decoder: decoder)
@@ -193,36 +221,6 @@ class Network {
             })
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
-    }
-}
-
-class NetworkHelpers{
-    static func parseClientResponse(_ response: Int) throws {
-        if (response < 400){
-            return
-        }
-        switch (response){
-        case 400:
-            throw NetworkError.badRequest
-        case 401:
-            throw NetworkError.unauthorized
-        case 403:
-            throw NetworkError.forbidden
-        case 404:
-            throw NetworkError.notFound
-        case 500:
-            throw NetworkError.internalServerError
-        case 501:
-            throw NetworkError.notImplemented
-        case 502:
-            throw NetworkError.badGateway
-        case 503:
-            throw NetworkError.serviceUnavailable
-        case 504:
-            throw NetworkError.gatewayTimeout
-        default:
-            throw NetworkError.unknown
-        }
     }
 }
 
