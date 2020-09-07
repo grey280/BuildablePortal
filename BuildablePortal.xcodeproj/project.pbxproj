@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D92548E2506977A0025901B /* AccountProjectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D92548D2506977A0025901B /* AccountProjectCellView.swift */; };
 		2D92548F2506977A0025901B /* AccountProjectCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D92548D2506977A0025901B /* AccountProjectCellView.swift */; };
+		2D925491250699710025901B /* TimesheetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D925490250699710025901B /* TimesheetEntryCell.swift */; };
+		2D925492250699710025901B /* TimesheetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D925490250699710025901B /* TimesheetEntryCell.swift */; };
 		2DB2EBB025005A36005B5669 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBAF25005A36005B5669 /* Tests_iOS.swift */; };
 		2DB2EBBB25005A36005B5669 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBBA25005A36005B5669 /* Tests_macOS.swift */; };
 		2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */; };
@@ -76,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		2D92548D2506977A0025901B /* AccountProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProjectCellView.swift; sourceTree = "<group>"; };
+		2D925490250699710025901B /* TimesheetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesheetEntryCell.swift; sourceTree = "<group>"; };
 		2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildablePortalApp.swift; sourceTree = "<group>"; };
 		2DB2EB9625005A36005B5669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DB2EB9B25005A36005B5669 /* BuildablePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildablePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				2D92548D2506977A0025901B /* AccountProjectCellView.swift */,
+				2D925490250699710025901B /* TimesheetEntryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +446,7 @@
 				2DB2EBF825005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EC0825005CBF005B5669 /* LoginView.swift in Sources */,
 				2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
+				2D925491250699710025901B /* TimesheetEntryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +476,7 @@
 				2DB2EBF925005B41005B5669 /* AuthUser.swift in Sources */,
 				2DB2EC0925005CBF005B5669 /* LoginView.swift in Sources */,
 				2DB2EBBE25005A36005B5669 /* BuildablePortalApp.swift in Sources */,
+				2D925492250699710025901B /* TimesheetEntryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
