@@ -82,7 +82,6 @@ class AuthService: ObservableObject {
         request.httpBody = try! JSONEncoder().encode(identity)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         loginToAccountHolder = URLSession.shared.dataTaskPublisher(for: request)
-            //            .print()
             .tryMap { data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
                     throw NetworkError(errorType: .unknown, statusText: "Could not parse response")

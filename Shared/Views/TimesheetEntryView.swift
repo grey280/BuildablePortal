@@ -72,7 +72,7 @@ struct TimesheetEntryView: View {
             self.timesheet.upsert(self.timesheetEntry) { (completion) in
                 switch completion{
                 case .failure(let error):
-                    self.error = error.localizedDescription
+                    self.error = error.statusText
                     self.hasError = true
                 case .finished:
                     if (!self.hasError){
