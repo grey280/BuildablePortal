@@ -77,6 +77,7 @@ struct TimesheetView: View {
                         Image(systemName: "plus")
                     }).padding().hoverEffect()
             )
+            Text("Select an item or tap add to get started.")
         }.onAppear {
             self.timesheet.clear()
         }
