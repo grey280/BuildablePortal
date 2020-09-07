@@ -198,7 +198,6 @@ class CacheService: ObservableObject {
                 try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
                 return data
             }
-//          .decode(type: T.self, decoder: decoder)
             .mapError { (originalError) -> NetworkError in
                 if let orig = originalError as? NetworkError {
                     return orig
@@ -260,14 +259,6 @@ class CacheService: ObservableObject {
                 try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
                 return data
             }
-            //            .map{ (data) -> [ListResultItem] in
-            //                do{
-            //                    return try decoder.decode([ListResultItem].self, from: data)
-            //                }catch let err{
-            //                    print(err)
-            //                }
-            //                return []
-            //            }
             .decode(type: [ListResultItem].self, decoder: decoder)
             .mapError({ (originalError) -> NetworkError in
                 if let orig = originalError as? NetworkError {
