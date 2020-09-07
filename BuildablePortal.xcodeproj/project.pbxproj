@@ -13,6 +13,8 @@
 		2D925492250699710025901B /* TimesheetEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D925490250699710025901B /* TimesheetEntryCell.swift */; };
 		2D9254942506C0C50025901B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9254932506C0C50025901B /* AuthService.swift */; };
 		2D9254952506C0C50025901B /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9254932506C0C50025901B /* AuthService.swift */; };
+		2D9254972506C1CA0025901B /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9254962506C1CA0025901B /* CacheService.swift */; };
+		2D9254982506C1CA0025901B /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D9254962506C1CA0025901B /* CacheService.swift */; };
 		2DB2EBB025005A36005B5669 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBAF25005A36005B5669 /* Tests_iOS.swift */; };
 		2DB2EBBB25005A36005B5669 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EBBA25005A36005B5669 /* Tests_macOS.swift */; };
 		2DB2EBBD25005A36005B5669 /* BuildablePortalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */; };
@@ -82,6 +84,7 @@
 		2D92548D2506977A0025901B /* AccountProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProjectCellView.swift; sourceTree = "<group>"; };
 		2D925490250699710025901B /* TimesheetEntryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimesheetEntryCell.swift; sourceTree = "<group>"; };
 		2D9254932506C0C50025901B /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		2D9254962506C1CA0025901B /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildablePortalApp.swift; sourceTree = "<group>"; };
 		2DB2EB9625005A36005B5669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DB2EB9B25005A36005B5669 /* BuildablePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildablePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -263,6 +266,7 @@
 		2DB2EBFA25005B5A005B5669 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				2D9254962506C1CA0025901B /* CacheService.swift */,
 				2DB2EBFB25005B5A005B5669 /* NetworkHelpers.swift */,
 				2D9254932506C0C50025901B /* AuthService.swift */,
 				2DB2EBFC25005B5A005B5669 /* UserDefault.swift */,
@@ -432,6 +436,7 @@
 				2DB2EBF225005B41005B5669 /* ListResultItem.swift in Sources */,
 				2DB2EBEA25005B41005B5669 /* TimesheetEntry.swift in Sources */,
 				2DB2EBE825005B41005B5669 /* TimesheetActivity.swift in Sources */,
+				2D9254972506C1CA0025901B /* CacheService.swift in Sources */,
 				2DB2EBEC25005B41005B5669 /* AccountProject.swift in Sources */,
 				2DB2EBE025005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE225005B41005B5669 /* Pager.swift in Sources */,
@@ -463,6 +468,7 @@
 				2DB2EBF325005B41005B5669 /* ListResultItem.swift in Sources */,
 				2DB2EBEB25005B41005B5669 /* TimesheetEntry.swift in Sources */,
 				2DB2EBE925005B41005B5669 /* TimesheetActivity.swift in Sources */,
+				2D9254982506C1CA0025901B /* CacheService.swift in Sources */,
 				2DB2EBED25005B41005B5669 /* AccountProject.swift in Sources */,
 				2DB2EBE125005B41005B5669 /* SearchFields.swift in Sources */,
 				2DB2EBE325005B41005B5669 /* Pager.swift in Sources */,
