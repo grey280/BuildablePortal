@@ -75,7 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2D92548D2506977A0025901B /* AccountProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountProjectCellView.swift; path = Views/AccountProjectCellView.swift; sourceTree = "<group>"; };
+		2D92548D2506977A0025901B /* AccountProjectCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProjectCellView.swift; sourceTree = "<group>"; };
 		2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildablePortalApp.swift; sourceTree = "<group>"; };
 		2DB2EB9625005A36005B5669 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2DB2EB9B25005A36005B5669 /* BuildablePortal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BuildablePortal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +146,7 @@
 		2D92548C250697650025901B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2D92548D2506977A0025901B /* AccountProjectCellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -171,7 +172,6 @@
 				2DB2EB9425005A36005B5669 /* BuildablePortalApp.swift */,
 				2DB2EC0725005CBF005B5669 /* LoginView.swift */,
 				2DB2EC0A25005CC7005B5669 /* TimesheetEntryView.swift */,
-				2D92548D2506977A0025901B /* AccountProjectCellView.swift */,
 				2DB2EC0B25005CC7005B5669 /* TimesheetView.swift */,
 				2DB2EB9625005A36005B5669 /* Assets.xcassets */,
 			);
