@@ -17,8 +17,12 @@ struct LoginView: View {
     @AppStorage("rememberedPassword") var rememberedPassword = ""
     
     var body: some View {
-        NavigationView {
+        VStack {
+            Text("Log In").font(.largeTitle)
+            Spacer()
+            
             Form {
+                
                 TextField("Username", text: $username).textContentType(.username)
                 SecureField("Password", text: $password).textContentType(.password)
                 Toggle("Remember me", isOn: $rememberMe)
@@ -35,10 +39,11 @@ struct LoginView: View {
                     Text("Login")
                 }.disabled(!canLogin)
             }.navigationBarTitle(Text("Log In"))
-        }.onAppear{
-            if (rememberMe){
-                username = rememberedEmail
-                password = rememberedPassword
+            .onAppear{
+                if (rememberMe){
+                    username = rememberedEmail
+                    password = rememberedPassword
+                }
             }
         }
     }
