@@ -9,82 +9,7 @@
 import Foundation
 import Combine
 
-class NetworkHelpers{
-    static func parseClientResponse(_ response: Int) throws {
-        if (response < 400){
-            return
-        }
-        switch (response){
-        case 400:
-            throw NetworkError.badRequest
-        case 401:
-            throw NetworkError.unauthorized
-        case 403:
-            throw NetworkError.forbidden
-        case 404:
-            throw NetworkError.notFound
-        case 500:
-            throw NetworkError.internalServerError
-        case 501:
-            throw NetworkError.notImplemented
-        case 502:
-            throw NetworkError.badGateway
-        case 503:
-            throw NetworkError.serviceUnavailable
-        case 504:
-            throw NetworkError.gatewayTimeout
-        default:
-            throw NetworkError.unknown
-        }
-    }
-}
-
-struct DefaultStorage {
-    @UserDefault("signin_token", defaultValue: "") var token: String
-}
-
-class CacheService: ObservableObject {
-    public static var shared = CacheService()
-    private init(){
-        self.reloadCacheAll()
-        // allows auto-refresh when signin happens
-        signinSubscription = AuthService.shared.objectWillChange.print("objectWillChange").sink(receiveValue: { (_) in
-            if (AuthService.shared.loggedIn){
-                self.reloadCacheAll()
-            }
-        })
-    }
-    
-    private var signinSubscription: AnyCancellable!
-    private var subscriptions: [AnyCancellable] = []
-    
-    func reloadCacheAll(){
-        print("reloadCacheAll()")
-        for sub in subscriptions{
-            sub.cancel()
-        }
-        let accounts = CacheService.getResultItems(nil, route: URL(string: "https://portal.buildableworks.com/api/Account/Accounts/getResultItems")!)
-            .print("reloadCacheAll.accounts")
-            .replaceError(with: [])
-            .assign(to: \.cachedAccounts, on: self)
-        let activities = CacheService.getResultItems(nil, route: URL(string: "https://portal.buildableworks.com/api/Finance/TimesheetActivities/getResultItems")!)
-            .print("reloadCacheAll.activities")
-            .replaceError(with: [])
-            .assign(to: \.cachedActivities, on: self)
-        let options = SearchOptions()
-        options.pagingDisabled = true
-        let accountProjects = CacheService.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Account/AccountProjects/getItems")!)
-            .print("reloadCacheAll.accountProjects")
-            .replaceError(with: [])
-            .assign(to: \.cachedAccountProjects, on: self)
-        subscriptions = [accounts, activities, accountProjects]
-    }
-    
-    @Published private(set) var cachedAccounts: [ListResultItem] = []
-    @Published private(set) var cachedActivities: [ListResultItem] = []
-    
-    @Published private(set) var cachedAccountProjects: [AccountProject] = []
-    
+class Network {
     private static func getCookieHeaders(for route: URL) -> [String: String]{
         var storage = DefaultStorage()
         if let cookies = HTTPCookieStorage.shared.cookies(for: route), cookies.count > 0 {
@@ -269,6 +194,87 @@ class CacheService: ObservableObject {
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
+}
+
+class NetworkHelpers{
+    static func parseClientResponse(_ response: Int) throws {
+        if (response < 400){
+            return
+        }
+        switch (response){
+        case 400:
+            throw NetworkError.badRequest
+        case 401:
+            throw NetworkError.unauthorized
+        case 403:
+            throw NetworkError.forbidden
+        case 404:
+            throw NetworkError.notFound
+        case 500:
+            throw NetworkError.internalServerError
+        case 501:
+            throw NetworkError.notImplemented
+        case 502:
+            throw NetworkError.badGateway
+        case 503:
+            throw NetworkError.serviceUnavailable
+        case 504:
+            throw NetworkError.gatewayTimeout
+        default:
+            throw NetworkError.unknown
+        }
+    }
+}
+
+struct DefaultStorage {
+    @UserDefault("signin_token", defaultValue: "") var token: String
+}
+
+class CacheService: ObservableObject {
+    public static var shared = CacheService()
+    private init(){
+        self.reloadCacheAll()
+        // allows auto-refresh when signin happens
+        signinSubscription = AuthService.shared.objectWillChange.print("objectWillChange").sink(receiveValue: { (_) in
+            if (AuthService.shared.loggedIn){
+                self.reloadCacheAll()
+            }
+        })
+    }
+    
+    private var signinSubscription: AnyCancellable!
+    private var subscriptions: [AnyCancellable] = []
+    
+    func reloadCacheAll(){
+        print("reloadCacheAll()")
+        for sub in subscriptions{
+            sub.cancel()
+        }
+        let accounts = Network.getResultItems(nil, route: URL(string: "https://portal.buildableworks.com/api/Account/Accounts/getResultItems")!)
+            .print("reloadCacheAll.accounts")
+            .replaceError(with: [])
+            .assign(to: \.cachedAccounts, on: self)
+        let activities = Network.getResultItems(nil, route: URL(string: "https://portal.buildableworks.com/api/Finance/TimesheetActivities/getResultItems")!)
+            .print("reloadCacheAll.activities")
+            .replaceError(with: [])
+            .assign(to: \.cachedActivities, on: self)
+        let options = SearchOptions()
+        options.pagingDisabled = true
+        let accountProjects = Network.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Account/AccountProjects/getItems")!)
+            .print("reloadCacheAll.accountProjects")
+            .replaceError(with: [])
+            .assign(to: \.cachedAccountProjects, on: self)
+        subscriptions = [accounts, activities, accountProjects]
+    }
+    
+    @Published private(set) var cachedAccounts: [ListResultItem] = []
+    @Published private(set) var cachedActivities: [ListResultItem] = []
+    
+    @Published private(set) var cachedAccountProjects: [AccountProject] = []
+    
+    
+    
+    
 }
 
 enum NetworkError: Error {

@@ -40,7 +40,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
             let fields = SearchFields()
             fields.accountProjectID = self.accountProjectID
             options.fields = fields
-            self.networkRequest = CacheService.getItems(options, route: getURL)
+            self.networkRequest = Network.getItems(options, route: getURL)
                 .print("accountProjectItems.getItems:")
                 .catch { error -> Just<[AccountProjectItem]?> in
                     print(error)

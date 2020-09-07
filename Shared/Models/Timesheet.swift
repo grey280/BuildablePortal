@@ -51,7 +51,7 @@ class Timesheet : ObservableObject {
         let getURL = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/getItems")!
         
         loadRequest?.cancel()
-        loadRequest = CacheService.getItems(self.searchOptions, route: getURL)
+        loadRequest = Network.getItems(self.searchOptions, route: getURL)
             .sink(receiveCompletion: { (completion) in
                 self.logger.debug("load() Got completion")
                 self._loading -= 1
@@ -90,7 +90,7 @@ class Timesheet : ObservableObject {
     func upsert(_ entry: TimesheetEntry, completion: @escaping ((Subscribers.Completion<NetworkError>) -> Void), receiveValue: ((TimesheetEntry) -> Void)?) {
         let wasAddition = entry.id == 0
         let url = entry.id == 0 ? URL(string: "https://portal.buildableworks.com/api/User/Timeclock/")! : URL(string: "https://portal.buildableworks.com/api/User/Timeclock/\(entry.id)")!
-        let newRequest = entry.id == 0 ? CacheService.post(entry, route: url) : CacheService.put(entry, route: url)
+        let newRequest = entry.id == 0 ? Network.post(entry, route: url) : Network.put(entry, route: url)
         let sank = newRequest
             .sink(receiveCompletion: completion) { (entry) in
                 if (wasAddition){
@@ -131,7 +131,7 @@ class Timesheet : ObservableObject {
         deleteRequest?.cancel()
         _loading += 1
         let url = URL(string: "https://portal.buildableworks.com/api/User/Timeclock/deleteBulk")!
-        deleteRequest = CacheService.deleteBulk(items, route: url)
+        deleteRequest = Network.deleteBulk(items, route: url)
             .sink(receiveCompletion: { (completion) in
                 self.logger.debug("delete() Received completion")
                 self._loading -= 1
