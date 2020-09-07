@@ -32,31 +32,35 @@ class Network {
         }
     }
     
-    private static func parseClientResponse(_ response: Int) throws {
+    static func parseClientResponse(code response: Int, data: Data) throws {
         if (response < 400){
             return
         }
+        let decoder = JSONDecoder()
+        guard let errorObject = try? decoder.decode(ErrorResult.self, from: data) else {
+            throw NetworkError(errorType: .unableToDecode, statusText: "Could not decode error object!")
+        }
         switch (response){
         case 400:
-            throw NetworkError.badRequest
+            throw NetworkError(errorType: .notFound, statusText: errorObject.statusText)
         case 401:
-            throw NetworkError.unauthorized
+            throw NetworkError(errorType: .unauthorized, statusText: errorObject.statusText)
         case 403:
-            throw NetworkError.forbidden
+            throw NetworkError(errorType: .forbidden, statusText: errorObject.statusText)
         case 404:
-            throw NetworkError.notFound
+            throw NetworkError(errorType: .notFound, statusText: errorObject.statusText)
         case 500:
-            throw NetworkError.internalServerError
+            throw NetworkError(errorType: .internalServerError, statusText: errorObject.statusText)
         case 501:
-            throw NetworkError.notImplemented
+            throw NetworkError(errorType: .notImplemented, statusText: errorObject.statusText)
         case 502:
-            throw NetworkError.badGateway
+            throw NetworkError(errorType: .badGateway, statusText: errorObject.statusText)
         case 503:
-            throw NetworkError.serviceUnavailable
+            throw NetworkError(errorType: .serviceUnavailable, statusText: errorObject.statusText)
         case 504:
-            throw NetworkError.gatewayTimeout
+            throw NetworkError(errorType: .gatewayTimeout, statusText: errorObject.statusText)
         default:
-            throw NetworkError.unknown
+            throw NetworkError(errorType: .unknown, statusText: errorObject.statusText)
         }
     }
     
@@ -75,9 +79,9 @@ class Network {
             .print("getItems()")
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try Network.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
             }
             .decode(type: T.self, decoder: decoder)
@@ -85,7 +89,7 @@ class Network {
                 if let orig = originalError as? NetworkError {
                     return orig
                 }
-                return NetworkError.unableToDecode
+                return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
             })
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -108,7 +112,7 @@ class Network {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .formatted(.buildableDate)
         guard let body = try? encoder.encode(item) else {
-            return Fail(outputType: T.self, failure: NetworkError.unableToEncode).eraseToAnyPublisher()
+            return Fail(outputType: T.self, failure: NetworkError(errorType: .unableToDecode, statusText: "Could not decode result")).eraseToAnyPublisher()
         }
         request.httpBody = body
         request.allHTTPHeaderFields = getCookieHeaders(for: route)
@@ -119,9 +123,9 @@ class Network {
             .print("post()")
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try Network.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
             }
             .decode(type: T.self, decoder: decoder)
@@ -129,7 +133,7 @@ class Network {
                 if let orig = originalError as? NetworkError {
                     return orig
                 }
-                return NetworkError.unableToDecode
+                return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
             }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -146,16 +150,16 @@ class Network {
             .print("post()")
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try Network.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
             }
             .mapError { (originalError) -> NetworkError in
                 if let orig = originalError as? NetworkError {
                     return orig
                 }
-                return NetworkError.unableToDecode
+                return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
             }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -166,7 +170,7 @@ class Network {
         var request = URLRequest(url: route)
         request.httpMethod = "POST"
         guard let body = try? JSONEncoder().encode(ids) else {
-            return Fail(outputType: (Any).self, failure: NetworkError.unableToEncode).eraseToAnyPublisher()
+            return Fail(outputType: (Any).self, failure: NetworkError(errorType: .unableToDecode, statusText: "Could not decode result")).eraseToAnyPublisher()
         }
         request.httpBody = body
         request.allHTTPHeaderFields = getCookieHeaders(for: route)
@@ -177,16 +181,16 @@ class Network {
             .print("post()")
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try Network.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
             }
             .mapError { (originalError) -> NetworkError in
                 if let orig = originalError as? NetworkError {
                     return orig
                 }
-                return NetworkError.unableToDecode
+                return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
             }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -207,9 +211,9 @@ class Network {
             .print("getResultItems()")
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Unknown error")
                 }
-                try Network.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
             }
             .decode(type: [ListResultItem].self, decoder: decoder)
@@ -217,7 +221,7 @@ class Network {
                 if let orig = originalError as? NetworkError {
                     return orig
                 }
-                return NetworkError.unableToDecode
+                return NetworkError(errorType: .unableToDecode, statusText: nil)
             })
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -228,43 +232,51 @@ struct DefaultStorage {
     @UserDefault("signin_token", defaultValue: "") var token: String
 }
 
-enum NetworkError: Error {
-    // Errors occurring in non-network level
-    case unknown, unableToDecode, unableToEncode
-    // 400 block
-    case badRequest, unauthorized, forbidden, notFound
-    // 500 block
-    case internalServerError, notImplemented, badGateway, serviceUnavailable, gatewayTimeout
+struct NetworkError: Error {
     
-    var localizedDescription: String {
-        switch self {
-        case .unableToDecode:
-            return "Could not decode result"
-        case .unableToEncode:
-            return "Could not encode data"
-        case .badRequest:
-            return "Bad Request"
-        case .unauthorized:
-            return "Unauthorized"
-        case .forbidden:
-            return "Forbidden"
-        case .notFound:
-            return "Not Found"
-        case .internalServerError:
-            return "Internal Server Error"
-        case .notImplemented:
-            return "Not Implemented"
-        case .badGateway:
-            return "Bad Gateway"
-        case .serviceUnavailable:
-            return "Service Unavailable"
-        case .gatewayTimeout:
-            return "Gateway Timeout"
-        default:
-            return "Unknown"
+    enum NetworkErrorType: Error {
+        // Errors occurring in non-network level
+        case unknown, unableToDecode, unableToEncode
+        // 400 block
+        case badRequest, unauthorized, forbidden, notFound
+        // 500 block
+        case internalServerError, notImplemented, badGateway, serviceUnavailable, gatewayTimeout
+        
+        var localizedDescription: String {
+            switch self {
+            case .unableToDecode:
+                return "Could not decode result"
+            case .unableToEncode:
+                return "Could not encode data"
+            case .badRequest:
+                return "Bad Request"
+            case .unauthorized:
+                return "Unauthorized"
+            case .forbidden:
+                return "Forbidden"
+            case .notFound:
+                return "Not Found"
+            case .internalServerError:
+                return "Internal Server Error"
+            case .notImplemented:
+                return "Not Implemented"
+            case .badGateway:
+                return "Bad Gateway"
+            case .serviceUnavailable:
+                return "Service Unavailable"
+            case .gatewayTimeout:
+                return "Gateway Timeout"
+            default:
+                return "Unknown"
+            }
         }
     }
+    
+    let errorType: NetworkErrorType
+    let statusText: String?
 }
+
+
 
 
 // struct NetworkError: Error { let errorType: NetworkErrorType; enum NetworkErrortype { /* from above */}; let errorMessage: String }

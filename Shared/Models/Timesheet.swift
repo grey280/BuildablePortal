@@ -57,7 +57,7 @@ class Timesheet : ObservableObject {
                 self._loading -= 1
                 switch(completion){
                 case .failure(let error):
-                    switch (error){
+                    switch (error.errorType){
                     case .unauthorized:
                         self.logger.debug(("load() got error: unauthorized"))
                         AuthService.shared.loggedIn = false

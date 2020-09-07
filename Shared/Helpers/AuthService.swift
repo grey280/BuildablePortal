@@ -53,9 +53,9 @@ class AuthService: ObservableObject {
         loginHolder = URLSession.shared.dataTaskPublisher(for: request)
             .tryMap{ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
         }
         .decode(type: AuthResult.self, decoder: decoder)
@@ -63,7 +63,7 @@ class AuthService: ObservableObject {
             if let orig = originalError as? NetworkError {
                 return orig
             }
-            return NetworkError.unableToDecode
+            return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
         })
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { (completion) in
@@ -85,9 +85,9 @@ class AuthService: ObservableObject {
             //            .print()
             .tryMap { data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse else {
-                    throw NetworkError.unknown
+                    throw NetworkError(errorType: .unknown, statusText: "Could not parse response")
                 }
-                try NetworkHelpers.parseClientResponse(httpResponse.statusCode)
+                try Network.parseClientResponse(code: httpResponse.statusCode, data: data)
                 return data
         }
         .decode(type: AuthResult.self, decoder: decoder)
@@ -95,7 +95,7 @@ class AuthService: ObservableObject {
             if let orig = originalError as? NetworkError {
                 return orig
             }
-            return NetworkError.unableToDecode
+            return NetworkError(errorType: .unableToDecode, statusText: "Unable to parse.")
         })
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { (completion) in
