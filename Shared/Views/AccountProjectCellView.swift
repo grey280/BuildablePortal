@@ -28,6 +28,11 @@ struct AccountProjectCellView: View {
 
 struct AccountProjectCellView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountProjectCellView(accountProject: AccountProject())
+        let proj = AccountProject()
+        proj.name = "Test Project"
+        proj.dateStart = Date() - 100_000
+        proj.dateEnd = Date() + 100_000
+        return AccountProjectCellView(accountProject: proj)
+            .previewLayout(.sizeThatFits)
     }
 }
