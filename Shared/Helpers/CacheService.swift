@@ -41,17 +41,26 @@ class CacheService: ObservableObject {
         let accountProjects = Network.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Account/AccountProjects/getItems")!)
             .print("reloadCacheAll.accountProjects")
             .replaceError(with: [])
-            .map { (items: [AccountProject]) -> [Int: AccountProject] in
-                let withID = items.filter { $0.ID != nil }
-                let asValues = withID.map { ($0.ID!, $0) }
-                return Dictionary(uniqueKeysWithValues: asValues)
-            }
-            .assign(to: \.cachedAccountProjects, on: self)
+            .sink(receiveValue: { (items: [AccountProject]) in
+                self.cachedAccountProjects = items
+                let asValues = items.filter { $0.ID != nil }
+                    .map {
+                        ($0.ID!, $0.name)
+                    }
+                self.accountProjectNames = Dictionary(uniqueKeysWithValues: asValues)
+            })
+//            .map { (items: [AccountProject]) -> [Int: AccountProject] in
+//                let withID = items.filter { $0.ID != nil }
+//                let asValues = withID.map { ($0.ID!, $0) }
+//                return Dictionary(uniqueKeysWithValues: asValues)
+//            }
+//            .assign(to: \.cachedAccountProjects, on: self)
         subscriptions = [accounts, activities, accountProjects]
     }
     
     @Published private(set) var cachedAccounts: [ListResultItem] = []
     @Published private(set) var cachedActivities: [ListResultItem] = []
     
-    @Published private(set) var cachedAccountProjects: [Int: AccountProject] = [:]
+    @Published private(set) var cachedAccountProjects: [AccountProject] = []
+    @Published private(set) var accountProjectNames: [AccountProject.ID: String?] = [:]
 }
