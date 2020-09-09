@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TimesheetEntryCell: View {
-    @ObservedObject var cache = CacheService.shared
+    @EnvironmentObject() var cache: CacheService
     
     var entry: TimesheetEntry
     

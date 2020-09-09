@@ -16,7 +16,7 @@ struct TimesheetEntryView: View {
     }
     
     @ObservedObject var timesheetEntry: TimesheetEntry
-    @ObservedObject var cache = CacheService.shared
+    @EnvironmentObject var cache: CacheService
     
     @State var hasError = false
     @State var error: String? = nil

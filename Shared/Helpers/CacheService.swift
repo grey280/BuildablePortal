@@ -12,12 +12,11 @@ import os.log
 class CacheService: ObservableObject {
     private let logger = Logger(subsystem: "com.buildableworks.portal", category: "cache")
     
-    public static var shared = CacheService()
-    private init(){
+    public init(auth: AuthService){
         self.reloadCacheAll()
         // allows auto-refresh when signin happens
-        signinSubscription = AuthService.shared.objectWillChange.print("objectWillChange").sink(receiveValue: { (_) in
-            if (AuthService.shared.loggedIn){
+        signinSubscription = auth.objectWillChange.print("objectWillChange").sink(receiveValue: { (_) in
+            if (auth.loggedIn){
                 self.reloadCacheAll()
             }
         })
