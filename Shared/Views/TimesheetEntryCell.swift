@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TimesheetEntryCell: View {
+    @ObservedObject var cache = CacheService.shared
+    
     var entry: TimesheetEntry
     
     static let formatter: NumberFormatter = {
@@ -17,14 +19,14 @@ struct TimesheetEntryCell: View {
     }()
     
     var body: some View {
-        let project = CacheService.shared.accountProjects[entry.accountProjectID]
+        let project = cache.accountProjects[entry.accountProjectID]
         var accountName: String? = nil
         if let accountID = project?.accountID {
-            accountName = CacheService.shared.accountNames[accountID] ?? nil
+            accountName = cache.accountNames[accountID] ?? nil
         }
         let projectName = "\(accountName ?? "Unknown"): \(project?.name ?? "Unknown")"
-        let color = (CacheService.shared.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
-        let activityName = (CacheService.shared.cachedActivityNames[entry.timesheetActivityID] ?? "Not Cached") ?? "No Name"
+        let color = (cache.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
+        let activityName = (cache.cachedActivityNames[entry.timesheetActivityID] ?? "Not Cached") ?? "No Name"
         
         return VStack (spacing: 3) {
             HStack {
