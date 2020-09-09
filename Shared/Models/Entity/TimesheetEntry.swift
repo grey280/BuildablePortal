@@ -63,20 +63,8 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
     @Published var description: String = ""
     
     // MARK: Notmapped
-    @available(*, deprecated)
-    @Published var systemUserName: String?
-    @available(*, deprecated)
-    @Published var accountProjectName: String?
     // not deprecated - used for backing AccountID
     @Published var accountProjectAccountID: AccountProject.AccountID? // from accountProjectAccountId
-    @available(*, deprecated)
-    @Published var accountProjectAccountName: String?
-    @available(*, deprecated)
-    @Published var timesheetActivityName: String?
-    @available(*, deprecated)
-    @Published var timesheetActivityCode: String?
-    @available(*, deprecated)
-    @Published var timesheetActivityColor: String?
     
     enum CodingKeys: String, CodingKey {
         case selected, editing, pager
@@ -87,9 +75,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         case timesheetActivityID = "timesheetActivityId"
         case accountProjectItemID = "accountProjectItemId"
         case dateAdded, dateModified, entryDate, entryHours, description
-        case systemUserName, accountProjectName
         case accountProjectAccountID = "accountProjectAccountId"
-        case accountProjectAccountName, timesheetActivityName, timesheetActivityCode, timesheetActivityColor
     }
     
     // MARK: Helpers
@@ -131,13 +117,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         description = (try? values.decode(String.self, forKey: .description)) ?? ""
 
         // NotMapped
-        systemUserName = try values.decode(String?.self, forKey: .systemUserName)
-        accountProjectName = try values.decode(String?.self, forKey: .accountProjectName)
         accountProjectAccountID = try values.decode(AccountProject.AccountID?.self, forKey: .accountProjectAccountID)
-        accountProjectAccountName = try values.decode(String?.self, forKey: .accountProjectAccountName)
-        timesheetActivityName = try values.decode(String?.self, forKey: .timesheetActivityName)
-        timesheetActivityCode = try values.decode(String?.self, forKey: .timesheetActivityCode)
-        timesheetActivityColor = try values.decode(String?.self, forKey: .timesheetActivityColor)
     }
 }
 
@@ -160,13 +140,7 @@ extension TimesheetEntry: Encodable {
         try container.encode(entryDate, forKey: .entryDate)
         try container.encode(entryHours, forKey: .entryHours)
         try container.encode(description, forKey: .description)
-//        try container.encode(systemUserName, forKey: .systemUserName)
-//        try container.encode(accountProjectName, forKey: .accountProjectName)
         try container.encode(accountProjectAccountID, forKey: .accountProjectAccountID)
-//        try container.encode(accountProjectAccountName, forKey: .accountProjectAccountName)
-//        try container.encode(timesheetActivityName, forKey: .timesheetActivityName)
-//        try container.encode(timesheetActivityCode, forKey: .timesheetActivityCode)
-//        try container.encode(timesheetActivityColor, forKey: .timesheetActivityColor)
     }
 }
 
