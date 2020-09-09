@@ -63,12 +63,19 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
     @Published var description: String = ""
     
     // MARK: Notmapped
+    @available(*, deprecated)
     @Published var systemUserName: String?
+    @available(*, deprecated)
     @Published var accountProjectName: String?
+    @available(*, deprecated)
     @Published var accountProjectAccountID: AccountProject.AccountID? // from accountProjectAccountId
+    @available(*, deprecated)
     @Published var accountProjectAccountName: String?
+    @available(*, deprecated)
     @Published var timesheetActivityName: String?
+    @available(*, deprecated)
     @Published var timesheetActivityCode: String?
+    @available(*, deprecated)
     @Published var timesheetActivityColor: String?
     
     enum CodingKeys: String, CodingKey {
