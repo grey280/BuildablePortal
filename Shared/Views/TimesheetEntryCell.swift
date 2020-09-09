@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TimesheetEntryCell: View {
+    @EnvironmentObject() var cache: CacheService
+    
     var entry: TimesheetEntry
     
     static let formatter: NumberFormatter = {
@@ -17,15 +19,24 @@ struct TimesheetEntryCell: View {
     }()
     
     var body: some View {
-        VStack (spacing: 3) {
+        let project = cache.accountProjects[entry.accountProjectID]
+        var accountName: String? = nil
+        if let accountID = project?.accountID {
+            accountName = cache.accountShortNames[accountID] ?? nil
+        }
+        let projectName = "\(accountName ?? "Unknown"): \(project?.name ?? "Unknown")"
+        let color = (cache.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
+        let activityName = (cache.cachedActivityNames[entry.timesheetActivityID] ?? "Not Cached") ?? "No Name"
+        
+        return VStack (spacing: 3) {
             HStack {
-                Text(entry.accountProjectName ?? "")
+                Text(projectName)
                 Spacer()
                 Text(TimesheetEntryCell.formatter.string(from: NSNumber(value: entry.entryHours)) ?? "0")
             }
             HStack {
-                Circle().fill(Color(entry.timesheetActivityColor ?? "brand-blue")).frame(width: 5, height: 5, alignment: .leading)
-                Text(entry.timesheetActivityName ?? "Unknown").font(.footnote)
+                Circle().fill(Color(color)).frame(width: 5, height: 5, alignment: .leading)
+                Text(activityName).font(.footnote)
                 Spacer()
                 Text(entry.entryDateString).font(.footnote)
             }

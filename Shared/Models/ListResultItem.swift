@@ -61,6 +61,11 @@ class ListResultItem: Codable{
         }
     }
     
+    public init(label: String, value: Any){
+        self.label = label
+        self.value = value
+    }
+    
     required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         selected = (try? values.decode(Bool.self, forKey: .selected)) ?? false

@@ -11,13 +11,14 @@ import SwiftUI
 struct BuildablePortalApp: App {
     @StateObject var timesheet = Timesheet()
     @ObservedObject var auth = AuthService.shared
+    @StateObject var cache = CacheService(auth: AuthService.shared)
     
     var body: some Scene {
         WindowGroup {
             if (auth.needsLogin){
-                LoginView()
+                LoginView().environmentObject(cache)
             } else {
-                TimesheetView(timesheet: timesheet)
+                TimesheetView(timesheet: timesheet).environmentObject(cache)
             }
         }
     }
