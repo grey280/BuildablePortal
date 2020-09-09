@@ -101,6 +101,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         df.dateStyle = .medium
         return df
     }()
+    @available(*, deprecated)
     var accountID: AccountProject.AccountID{
         get{
             return accountProjectAccountID ?? -1
