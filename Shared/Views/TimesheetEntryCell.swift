@@ -17,9 +17,14 @@ struct TimesheetEntryCell: View {
     }()
     
     var body: some View {
-        let projectName = (CacheService.shared.accountProjectNames[entry.accountProjectID] ?? "Unknown") ?? "Unknown"
+        let project = CacheService.shared.accountProjects[entry.accountProjectID]
+        var accountName: String? = nil
+        if let accountID = project?.accountID {
+            accountName = CacheService.shared.accountNames[accountID] ?? nil
+        }
+        let projectName = "\(accountName ?? "Unknown"): \(project?.name ?? "Unknown")"
         let color = (CacheService.shared.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
-        let activityName = (CacheService.shared.cachedActivityNames[entry.timesheetActivityID] ?? "Unknown") ?? "Unknown"
+        let activityName = (CacheService.shared.cachedActivityNames[entry.timesheetActivityID] ?? "Not Cached") ?? "No Name"
         
         return VStack (spacing: 3) {
             HStack {
