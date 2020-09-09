@@ -67,7 +67,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
     @Published var systemUserName: String?
     @available(*, deprecated)
     @Published var accountProjectName: String?
-    @available(*, deprecated)
+    // not deprecated - used for backing AccountID
     @Published var accountProjectAccountID: AccountProject.AccountID? // from accountProjectAccountId
     @available(*, deprecated)
     @Published var accountProjectAccountName: String?
@@ -101,7 +101,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         df.dateStyle = .medium
         return df
     }()
-    @available(*, deprecated)
+    
     var accountID: AccountProject.AccountID{
         get{
             return accountProjectAccountID ?? -1
@@ -160,13 +160,13 @@ extension TimesheetEntry: Encodable {
         try container.encode(entryDate, forKey: .entryDate)
         try container.encode(entryHours, forKey: .entryHours)
         try container.encode(description, forKey: .description)
-        try container.encode(systemUserName, forKey: .systemUserName)
-        try container.encode(accountProjectName, forKey: .accountProjectName)
+//        try container.encode(systemUserName, forKey: .systemUserName)
+//        try container.encode(accountProjectName, forKey: .accountProjectName)
         try container.encode(accountProjectAccountID, forKey: .accountProjectAccountID)
-        try container.encode(accountProjectAccountName, forKey: .accountProjectAccountName)
-        try container.encode(timesheetActivityName, forKey: .timesheetActivityName)
-        try container.encode(timesheetActivityCode, forKey: .timesheetActivityCode)
-        try container.encode(timesheetActivityColor, forKey: .timesheetActivityColor)
+//        try container.encode(accountProjectAccountName, forKey: .accountProjectAccountName)
+//        try container.encode(timesheetActivityName, forKey: .timesheetActivityName)
+//        try container.encode(timesheetActivityCode, forKey: .timesheetActivityCode)
+//        try container.encode(timesheetActivityColor, forKey: .timesheetActivityColor)
     }
 }
 
