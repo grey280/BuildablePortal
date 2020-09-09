@@ -52,7 +52,9 @@ class CacheService: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { (items) in
                 self.cachedAccounts = items
-                self.accountNames = Dictionary(uniqueKeysWithValues: items.filter { $0.valueInt != nil }.map { ($0.valueInt!, $0.label)})
+                let nonNilItems = items.filter { $0.valueInt != nil }
+                self.accountNames = Dictionary(uniqueKeysWithValues: nonNilItems.map { ($0.valueInt!, $0.label)})
+                self.accountShortNames = Dictionary(uniqueKeysWithValues: nonNilItems.map { ($0.valueInt!, String($0.label.split(separator: " ")[0]))})
             }
         let options = SearchOptions()
         options.pagingDisabled = true
@@ -82,6 +84,7 @@ class CacheService: ObservableObject {
     
     @Published private(set) var cachedAccounts: [ListResultItem] = []
     @Published private(set) var accountNames: [AccountProject.AccountID: String?] = [:]
+    @Published private(set) var accountShortNames: [AccountProject.AccountID: String?] = [:]
     
     @Published private(set) var cachedActivities: [ListResultItem] = []
     @Published private(set) var cachedActivityColors: [TimesheetActivity.ID: String?] = [:]

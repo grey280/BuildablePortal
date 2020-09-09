@@ -22,7 +22,7 @@ struct TimesheetEntryCell: View {
         let project = cache.accountProjects[entry.accountProjectID]
         var accountName: String? = nil
         if let accountID = project?.accountID {
-            accountName = cache.accountNames[accountID] ?? nil
+            accountName = cache.accountShortNames[accountID] ?? nil
         }
         let projectName = "\(accountName ?? "Unknown"): \(project?.name ?? "Unknown")"
         let color = (cache.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
