@@ -17,15 +17,19 @@ struct TimesheetEntryCell: View {
     }()
     
     var body: some View {
-        VStack (spacing: 3) {
+        let projectName = (CacheService.shared.accountProjectNames[entry.accountProjectID] ?? "Unknown") ?? "Unknown"
+        let color = (CacheService.shared.cachedActivityColors[entry.timesheetActivityID] ?? "brand-blue") ?? "brand-blue"
+        let activityName = (CacheService.shared.cachedActivityNames[entry.timesheetActivityID] ?? "Unknown") ?? "Unknown"
+        
+        return VStack (spacing: 3) {
             HStack {
-                Text(entry.accountProjectName ?? "")
+                Text(projectName)
                 Spacer()
                 Text(TimesheetEntryCell.formatter.string(from: NSNumber(value: entry.entryHours)) ?? "0")
             }
             HStack {
-                Circle().fill(Color(entry.timesheetActivityColor ?? "brand-blue")).frame(width: 5, height: 5, alignment: .leading)
-                Text(entry.timesheetActivityName ?? "Unknown").font(.footnote)
+                Circle().fill(Color(color)).frame(width: 5, height: 5, alignment: .leading)
+                Text(activityName).font(.footnote)
                 Spacer()
                 Text(entry.entryDateString).font(.footnote)
             }
