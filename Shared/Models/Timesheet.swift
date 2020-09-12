@@ -44,7 +44,9 @@ class Timesheet : ObservableObject {
         
         self.searchOptions.pageNumber = (self.searchOptions.pageNumber ?? 0) + 1
         self.pager.pageNumber = (self.pager.pageNumber ?? 0) + 1
-        
+        if let _ = loadRequest {
+            _loading -= 1 // clear loading state if we're cancelling
+        }
         _loading += 1
         
         // want to hit "https://portal.buildableworks.com/api/User/Timeclock/getItems" with a SearchOptions and the headers set
