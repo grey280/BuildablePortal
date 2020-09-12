@@ -73,6 +73,9 @@ class Timesheet : ObservableObject {
                 self.logger.debug("Received new timesheet entries")
                 
                 self.pager = values.last?.pager ?? self.pager
+                if let totalItems = self.pager.totalItems, let pageSize = self.pager.pageSize {
+                    self.pager.totalPages = totalItems / pageSize
+                }
                 let newValues = values.dropLast() // pager
                 self.entries.append(contentsOf: Array(newValues))
                 self.updateDays()
