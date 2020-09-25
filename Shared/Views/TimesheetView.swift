@@ -12,6 +12,7 @@ import Combine
 struct TimesheetView: View {
     @ObservedObject var timesheet: Timesheet
     @ObservedObject var auth = AuthService.shared
+    @EnvironmentObject var cache: CacheService
     
     var body: some View {
         return NavigationView {
@@ -43,7 +44,14 @@ struct TimesheetView: View {
                         self.timesheet.clear()
                     }, label: {
                         Image(systemName: "arrow.clockwise")
-                    }).padding().hoverEffect(),
+                    }).padding().hoverEffect()
+                    .contextMenu(menuItems: {
+                        Button(action: {
+                            self.cache.reloadCacheAll()
+                        }, label: {
+                            Text("Clear Cache")
+                        })
+                    }),
                 trailing:
                     NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: TimesheetEntry()), label: {
                         Image(systemName: "plus")
