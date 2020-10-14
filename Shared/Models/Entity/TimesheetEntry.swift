@@ -103,7 +103,7 @@ class TimesheetEntry: Decodable, Identifiable, ObservableObject {
         editing = (try? values.decode(Bool.self, forKey: .editing)) ?? false
         pager = try values.decode(Pager?.self, forKey: .pager)
         systemUser = try values.decode(SystemUser?.self, forKey: .systemUser)
-        accountProject = try values.decode(AccountProject?.self, forKey: .accountProject)
+        accountProject = try? values.decode(AccountProject?.self, forKey: .accountProject)
         timesheetActivity = try values.decode(TimesheetActivity?.self, forKey: .timesheetActivity)
         id = (try? values.decode(ID.self, forKey: .id)) ?? 0
         systemUserID = (try? values.decode(SystemUser.ID.self, forKey: .systemUserID)) ?? -1 // from systemUserId

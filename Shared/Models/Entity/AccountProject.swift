@@ -13,6 +13,7 @@ class AccountProject: Codable {
     typealias AccountID = Int
     
     var timesheetEntries: [TimesheetEntry]?
+    var accountProjectItems: [AccountProjectItem]?
 //    var account: Account?
     var ID: ID? // from accountProjectId
     var accountID: AccountID? // from accountId
@@ -33,6 +34,6 @@ class AccountProject: Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case timesheetEntries, ID = "accountProjectId", accountID = "accountId", name, description, isActive, dateAdded, dateModified, isBillable, dateStart, dateEnd, accountName
+        case timesheetEntries, ID = "accountProjectId", accountID = "accountId", name, description, isActive, dateAdded, dateModified, isBillable, dateStart, dateEnd, accountName, accountProjectItems
     }
 }
