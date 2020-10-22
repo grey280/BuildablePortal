@@ -58,6 +58,8 @@ class CacheService: ObservableObject {
             }
         let options = SearchOptions()
         options.pagingDisabled = true
+        options.fields = SearchFields()
+        options.fields?.deviceID = 1 // used in AccountProjects.getItems(getItemsData) to not bring *every* timesheet entry - significant data use reduction
         let activities = Network.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Finance/TimesheetActivities/getItems")!)
             .print("reloadCacheAll.activities")
 //            .replaceError(with: [])
