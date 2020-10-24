@@ -46,7 +46,7 @@ class CacheService: ObservableObject {
         for sub in subscriptions{
             sub.cancel()
         }
-        let accounts = Network.getResultItems(nil, route: URL(string: "https://portal.buildableworks.com/api/Account/Accounts/getResultItems")!)
+        let accounts = Network.getResultItems(nil, route: URL(string: "\(Network.appBase)/api/Account/Accounts/getResultItems")!)
             .print("reloadCacheAll.accounts")
             .replaceError(with: [])
             .receive(on: DispatchQueue.main)
@@ -60,7 +60,7 @@ class CacheService: ObservableObject {
         options.pagingDisabled = true
         options.fields = SearchFields()
         options.fields?.deviceID = 1 // used in AccountProjects.getItems(getItemsData) to not bring *every* timesheet entry - significant data use reduction
-        let activities = Network.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Finance/TimesheetActivities/getItems")!)
+        let activities = Network.getItems(options, route: URL(string: "\(Network.appBase)/api/Finance/TimesheetActivities/getItems")!)
             .print("reloadCacheAll.activities")
 //            .replaceError(with: [])
             .receive(on: DispatchQueue.main)
@@ -69,7 +69,7 @@ class CacheService: ObservableObject {
             }, receiveValue: splitActivities)
 //            .sink(receiveValue: splitActivities)
         
-        let accountProjects = Network.getItems(options, route: URL(string: "https://portal.buildableworks.com/api/Account/AccountProjects/getItems")!)
+        let accountProjects = Network.getItems(options, route: URL(string: "\(Network.appBase)/api/Account/AccountProjects/getItems")!)
             .print("reloadCacheAll.accountProjects")
             .replaceError(with: [])
             .receive(on: DispatchQueue.main)

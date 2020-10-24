@@ -10,6 +10,11 @@ import Foundation
 import Combine
 
 class Network {
+    public static var appBase: String {
+        "https://portal.buildableworks.com"
+//        "http://192.168.0.19:5000"
+    }
+    
     private static func getCookieHeaders(for route: URL) -> [String: String]{
         var storage = DefaultStorage()
         if let cookies = HTTPCookieStorage.shared.cookies(for: route), cookies.count > 0 {
