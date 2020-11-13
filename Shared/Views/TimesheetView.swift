@@ -37,26 +37,32 @@ struct TimesheetView: View {
                     ProgressView("Loading...")
                 }
             }
-            .navigationBarTitle(Text("Time Clock"))
-            .navigationBarItems(
-                leading:
+            .navigationTitle(Text("Time Clock"))
+            .toolbar {
+                ToolbarItem(placement: ToolbarItemPlacement.automatic) {
                     Button(action: {
                         self.timesheet.clear()
                     }, label: {
                         Image(systemName: "arrow.clockwise")
-                    }).padding().hoverEffect()
+                    })
+                        .padding()
+                        //.hoverEffect()
                     .contextMenu(menuItems: {
                         Button(action: {
                             self.cache.reloadCacheAll()
                         }, label: {
                             Text("Clear Cache")
                         })
-                    }),
-                trailing:
+                    })
+                }
+                ToolbarItem(placement: .automatic) {
                     NavigationLink(destination: TimesheetEntryView(timesheet: self.timesheet, timesheetEntry: TimesheetEntry()), label: {
                         Image(systemName: "plus")
-                    }).padding().hoverEffect()
-            )
+                    })
+                        .padding()
+                        //.hoverEffect()
+                }
+            }
             Text("Select an item or tap add to get started.")
         }.onAppear {
             self.timesheet.clear()

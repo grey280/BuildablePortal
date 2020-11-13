@@ -66,26 +66,34 @@ struct TimesheetEntryView: View {
             }
             TextField("Description", text: $timesheetEntry.description)
         }
-        .navigationBarTitle(Text(isNew ? "New Entry" : "Edit Entry"), displayMode: .inline)
-        .navigationBarItems(trailing: Button(action: {
-            self.timesheetEntry.systemUserID = AuthService.shared.authInfo?.userID ?? 0
-            self.timesheet.upsert(self.timesheetEntry) { (completion) in
-                switch completion{
-                case .failure(let error):
-                    self.error = error.statusText
-                    self.hasError = true
-                case .finished:
-                    if (!self.hasError){
-                        self.presentationMode.wrappedValue.dismiss()
+        .navigationTitle(Text(isNew ? "New Entry" : "Edit Entry"))//, displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: ToolbarItemPlacement.automatic) {
+                Button(action: {
+                    self.timesheetEntry.systemUserID = AuthService.shared.authInfo?.userID ?? 0
+                    self.timesheet.upsert(self.timesheetEntry) { (completion) in
+                        switch completion{
+                        case .failure(let error):
+                            self.error = error.statusText
+                            self.hasError = true
+                        case .finished:
+                            if (!self.hasError){
+                                self.presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                    } receiveValue: { (value) in
+                        print(value)
                     }
+                }) {
+                    Text("Save")
+                        .padding()//.hoverEffect()
                 }
-            } receiveValue: { (value) in
-                print(value)
             }
-        }) { Text("Save").padding().hoverEffect() })
+        }
             .alert(isPresented: self.$hasError) { () -> Alert in
                 Alert(title: Text("Unable to save"), message: Text(self.error ?? "Unknown error"), dismissButton: nil)
         }
+        
     }
 }
 
