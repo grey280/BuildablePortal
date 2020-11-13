@@ -38,7 +38,7 @@ struct LoginView: View {
                 }) {
                     Text("Login")
                 }.disabled(!canLogin)
-            }.navigationBarTitle(Text("Log In"))
+            }.navigationTitle(Text("Log In"))
             .onAppear{
                 if (rememberMe){
                     username = rememberedEmail
